@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Headless Commerce
 
-## Getting Started
+Modern headless e-commerce prototype built with Next.js, TypeScript and a custom cart experience.
 
-First, run the development server:
+This project is not a Shopify clone. The goal is to demonstrate product UX, cart state management, performance-aware rendering and a checkout-ready architecture.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+- Product catalog with fast client-side filters
+- Product detail pages
+- Cart drawer instead of a traditional cart page
+- Global cart state with React Context and reducer
+- Mock Stripe checkout flow
+- Optimized product images with Next.js Image
+- Responsive UI
+- SEO-ready product pages
+- Clean project architecture for future CMS or payment integration
+
+## Tech Stack
+
+- Next.js App Router
+- React
+- TypeScript
+- CSS Modules / Tailwind CSS
+- Next.js Image Optimization
+- Mock Stripe checkout
+- npm
+- Node.js v24.15.0
+
+## Project Structure
+
+```txt
+src/
+  app/
+    page.tsx
+    product/[slug]/page.tsx
+    checkout/page.tsx
+    layout.tsx
+    globals.css
+  components/
+    cart/
+    product/
+    ui/
+  data/
+    products.ts
+  lib/
+    cart-store.tsx
+    format.ts
+    stripe-mock.ts
+  types/
+    product.ts
+public/
+  products/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Getting Started
+Install dependencies:
+npm install
+Run the development server:
+npm run dev
+Open:
+http://localhost:3000
+Build for production:
+npm run build
+Start production server:
+npm run start
+Main UX Decisions
+Cart drawer
+The cart opens as a drawer instead of navigating to a separate cart page.
+This keeps the user in the shopping flow and reduces friction before checkout.
+Fast filters
+Product filters update instantly without a page reload.
+This improves browsing speed and makes the catalog feel more responsive.
+Mock checkout
+Stripe is mocked intentionally.
+The architecture keeps checkout isolated so a real Stripe integration can be added later without rewriting the cart or product flow.
+Performance Notes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Product images use Next.js image optimization.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+Product pages are server-rendered.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Filtering happens on the client to avoid unnecessary navigation.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The cart state is kept lightweight and local to the app.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+Future Improvements
+
+
+Real Stripe Checkout integration
+
+
+CMS integration with Sanity, Contentful or Payload
+
+
+Product search
+
+
+Wishlist
+
+
+User accounts
+
+
+Order history
+
+
+Inventory handling
+
+
+Analytics events for add-to-cart and checkout conversion
+
+
+Why this project exists
+This project is designed as a portfolio-level frontend case study.
+It focuses on the parts of e-commerce that matter in real products:
+
+
+conversion-oriented UX
+
+
+state management
+
+
+performance
+
+
+maintainable component architecture
+
+
+clean checkout flow
+
+
+---## Ordine corretto di sviluppo1. **Homepage statica**2. **Dati prodotti mock**3. **Product card**4. **Product grid**5. **Filtri**6. **Pagina dettaglio prodotto**7. **Cart context**8. **Cart drawer**9. **Checkout mock**10. **Responsive polish**11. **README**12. **Deploy**Non partire da Stripe. Sarebbe una perdita di tempo. Prima fai vedere che sai costruire un’esperienza d’acquisto solida.
