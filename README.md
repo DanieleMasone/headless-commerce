@@ -99,7 +99,7 @@ Documented areas include the product model, cart reducer, cart provider, checkou
 
 ## CI/CD
 
-`.github/workflows/ci-pages.yml` runs on pull requests and pushes to `main`:
+`.github/workflows/ci-pages.yml` runs on pull requests and pushes to `master`:
 
 1. Set up Node.js from `.node-version` (`24.15.0`).
 2. Run `npm ci`.
@@ -107,7 +107,7 @@ Documented areas include the product model, cart reducer, cart provider, checkou
 4. Run `npm run ci`.
 5. Upload coverage and docs artifacts.
 6. Upload `out/` as the GitHub Pages artifact.
-7. Deploy Pages only on pushes to `main`.
+7. Deploy Pages only on pushes to `master`.
 
 ## Technical Decisions
 
