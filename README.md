@@ -130,3 +130,9 @@ Documented areas include the product model, cart reducer, cart provider, checkou
 - Add visual regression checks for key responsive layouts.
 - Add optional CMS adapter while preserving static export.
 - Add analytics event contracts for cart and checkout funnels.
+
+## License
+
+Released under the MIT License. See [LICENSE](LICENSE).
+
+Copyright (c) 2026 Daniele Masone.
