@@ -158,14 +158,6 @@ npm run expose:reports
 - The checkout does not create real Stripe sessions. It demonstrates integration shape and UX states only.
 - Generated `docs/` and `coverage/` are not committed. They are created in CI and copied into `out/` for Pages deployment.
 
-## Roadmap
-
-- Add persisted coupon and shipping estimator mocks.
-- Add visual regression checks for key responsive layouts.
-- Add optional CMS adapter while preserving static export.
-- Add analytics event contracts for cart and checkout funnels.
-- Add product comparison and recently viewed modules.
-
 ## License
 
 Released under the MIT License. See [LICENSE](LICENSE).
