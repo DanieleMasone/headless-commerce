@@ -21,8 +21,9 @@
     "test:e2e": "playwright install chromium && playwright test",
     "docs": "npm run docs:clean && typedoc",
     "docs:clean": "node scripts/clean-docs.mjs",
-    "ci": "npm run format:check && npm run lint && npm run typecheck && npm run test:coverage && npm run test:e2e && npm run docs && npm run build",
-    "deploy:check": "npm run build && node scripts/assert-static-export.mjs"
+    "expose:reports": "node scripts/expose-reports.mjs",
+    "ci": "npm run format:check && npm run lint && npm run typecheck && npm run test:coverage && npm run test:e2e && npm run docs && npm run build && npm run expose:reports",
+    "deploy:check": "npm run test:coverage && npm run docs && npm run build && npm run expose:reports && node scripts/assert-static-export.mjs"
   },
   "dependencies": {
     "next": "16.2.6",

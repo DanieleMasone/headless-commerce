@@ -93,7 +93,8 @@ export function Drawer({
     <div className="fixed inset-0 z-50" role="presentation">
       <button
         aria-label="Chiudi carrello"
-        className="absolute inset-0 cursor-default bg-stone-950/45"
+        className="absolute inset-0 cursor-default bg-stone-950/55"
+        data-testid="drawer-overlay"
         onClick={onClose}
         type="button"
       />
@@ -102,14 +103,14 @@ export function Drawer({
         aria-labelledby={titleId}
         aria-modal="true"
         className={cx(
-          "absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-white shadow-2xl outline-none",
+          "absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-white shadow-2xl outline-none dark:bg-stone-950",
           className,
         )}
         onKeyDown={handleKeyDown}
         role="dialog"
       >
-        <header className="flex items-center justify-between border-b border-stone-200 px-5 py-4">
-          <h2 className="text-lg font-semibold text-stone-950" id={titleId}>
+        <header className="flex items-center justify-between border-b border-stone-200 px-5 py-4 dark:border-stone-800">
+          <h2 className="text-lg font-semibold text-stone-950 dark:text-white" id={titleId}>
             {title}
           </h2>
           <Button
@@ -123,7 +124,9 @@ export function Drawer({
           </Button>
         </header>
         <div className="flex-1 overflow-y-auto px-5 py-5">{children}</div>
-        {footer ? <footer className="border-t border-stone-200 p-5">{footer}</footer> : null}
+        {footer ? (
+          <footer className="border-t border-stone-200 p-5 dark:border-stone-800">{footer}</footer>
+        ) : null}
       </aside>
     </div>
   );

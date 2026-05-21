@@ -4,13 +4,15 @@ import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { useCart } from "@/lib/cart/cart-store";
+import { formatPrice } from "@/lib/format";
 
 export function CartButton(): ReactNode {
   const { itemCount, openCart, subtotalCents } = useCart();
+  const subtotalLabel = formatPrice(subtotalCents);
 
   return (
     <Button
-      aria-label={`Apri carrello, ${itemCount} articoli`}
+      aria-label={`Apri carrello, ${itemCount} articoli, totale ${subtotalLabel}`}
       className="min-w-28"
       onClick={openCart}
       variant="secondary"
@@ -22,7 +24,7 @@ export function CartButton(): ReactNode {
       >
         {itemCount}
       </span>
-      <span className="sr-only">Subtotale in centesimi: {subtotalCents}</span>
+      <span className="sr-only">Totale carrello {subtotalLabel}</span>
     </Button>
   );
 }

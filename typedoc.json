@@ -3,10 +3,12 @@
   "entryPoints": [
     "src/components/cart",
     "src/components/product",
+    "src/components/theme",
     "src/components/ui",
     "src/lib/cart",
     "src/lib/checkout",
     "src/lib/products",
+    "src/lib/theme",
     "src/lib/format.ts",
     "src/lib/routing.ts",
     "src/types"

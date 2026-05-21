@@ -97,6 +97,9 @@ export function getCartItemCount(items: readonly CartLineItem[]): number {
   return items.reduce((total, item) => total + item.quantity, 0);
 }
 
+/**
+ * Calculates the shopper-facing subtotal in integer cents.
+ */
 export function getCartSubtotal(items: readonly CartLineItem[]): number {
   return items.reduce((total, item) => total + item.product.priceCents * item.quantity, 0);
 }

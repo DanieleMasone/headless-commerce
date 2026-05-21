@@ -19,7 +19,11 @@ describe("ProductCard", () => {
     const onAddToCart = vi.fn();
     render(<ProductCard onAddToCart={onAddToCart} product={products[0]} />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Aggiungi" }));
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: `Aggiungi ${products[0].name} al carrello`,
+      }),
+    );
 
     expect(onAddToCart).toHaveBeenCalledWith(products[0]);
   });

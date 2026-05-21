@@ -8,6 +8,7 @@ describe("filterProducts", () => {
     const result = filterProducts(products, {
       category: "Workspace",
       maxPriceCents: 10000,
+      query: "",
       sort: "featured",
     });
 
@@ -18,6 +19,7 @@ describe("filterProducts", () => {
     const result = filterProducts(products, {
       category: "all",
       maxPriceCents: getMaxCatalogPrice(products),
+      query: "",
       sort: "price-desc",
     });
 
@@ -28,15 +30,28 @@ describe("filterProducts", () => {
     const byPrice = filterProducts(products, {
       category: "all",
       maxPriceCents: getMaxCatalogPrice(products),
+      query: "",
       sort: "price-asc",
     });
     const byName = filterProducts(products, {
       category: "all",
       maxPriceCents: getMaxCatalogPrice(products),
+      query: "",
       sort: "name-asc",
     });
 
     expect(byPrice[0]?.slug).toBe("drift-weekly-planner");
     expect(byName[0]?.slug).toBe("apex-commuter-pack");
+  });
+
+  it("searches product names, categories, descriptions, and features", () => {
+    const result = filterProducts(products, {
+      category: "all",
+      maxPriceCents: getMaxCatalogPrice(products),
+      query: "hybrid anc",
+      sort: "featured",
+    });
+
+    expect(result.map((product) => product.slug)).toEqual(["pulse-anc-focus-headset"]);
   });
 });

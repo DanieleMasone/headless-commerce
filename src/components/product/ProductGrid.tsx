@@ -17,10 +17,12 @@ export function ProductGrid({ onResetFilters, products }: ProductGridProps): Rea
 
   if (products.length === 0) {
     return (
-      <div className="flex min-h-80 flex-col items-center justify-center border-b border-stone-200 text-center">
-        <h2 className="text-2xl font-semibold text-stone-950">Nessun prodotto trovato</h2>
-        <p className="mt-3 max-w-md text-stone-600">
-          Riduci i filtri o aumenta il prezzo massimo per vedere più articoli.
+      <div className="flex min-h-80 flex-col items-center justify-center border-b border-stone-200 text-center dark:border-stone-800">
+        <h2 className="text-2xl font-semibold text-stone-950 dark:text-white">
+          Nessun prodotto trovato
+        </h2>
+        <p className="mt-3 max-w-md text-stone-600 dark:text-stone-300">
+          Prova una ricerca più ampia, cambia categoria o aumenta il prezzo massimo.
         </p>
         <Button className="mt-6" onClick={onResetFilters} variant="secondary">
           Reimposta filtri

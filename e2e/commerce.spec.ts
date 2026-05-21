@@ -2,12 +2,32 @@ import { expect, test } from "@playwright/test";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-test("shopper filters products, adds to cart, edits quantity, and completes mock checkout", async ({
+test("shopper searches, filters, edits cart quantity, and completes mock checkout", async ({
   page,
 }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem("headless-commerce-theme", "light");
+  });
   await page.goto(`${basePath}/`);
 
-  await expect(page.getByRole("heading", { name: /Commerce frontend veloce/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Headless commerce statico/ })).toBeVisible();
+
+  const footer = page.getByRole("contentinfo");
+  await expect(footer.getByRole("link", { name: "Coverage" })).toHaveAttribute(
+    "href",
+    `${basePath}/coverage/`,
+  );
+  await expect(footer.getByRole("link", { name: "Docs" })).toHaveAttribute(
+    "href",
+    `${basePath}/docs/`,
+  );
+
+  await page.getByRole("button", { name: "Attiva tema scuro" }).click();
+  await expect(page.locator("html")).toHaveClass(/dark/);
+
+  await page.getByLabel("Cerca prodotti").fill("headset");
+  await expect(page.getByText("1 prodotto trovato su 8")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Pulse ANC Focus Headset" })).toBeVisible();
 
   await page.getByRole("button", { name: "Audio" }).click();
   await expect(page.getByRole("heading", { name: "Pulse ANC Focus Headset" })).toBeVisible();

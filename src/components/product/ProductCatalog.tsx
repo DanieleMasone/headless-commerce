@@ -22,6 +22,7 @@ export function ProductCatalog({ categories, products }: ProductCatalogProps): R
     () => ({
       category: "all",
       maxPriceCents,
+      query: "",
       sort: "featured",
     }),
     [maxPriceCents],
@@ -33,12 +34,14 @@ export function ProductCatalog({ categories, products }: ProductCatalogProps): R
     <section className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8" id="catalogo">
       <div className="flex flex-col gap-3 py-8 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="text-sm font-semibold uppercase text-emerald-800">Catalogo curato</p>
-          <h2 className="mt-2 text-3xl font-semibold text-stone-950">
+          <p className="text-sm font-semibold uppercase text-emerald-800 dark:text-emerald-300">
+            Catalogo curato
+          </p>
+          <h2 className="mt-2 text-3xl font-semibold text-stone-950 dark:text-white">
             Prodotti pronti per il lavoro ibrido
           </h2>
         </div>
-        <p className="max-w-xl text-stone-600">
+        <p className="max-w-xl text-stone-600 dark:text-stone-300">
           Un catalogo mock locale progettato per dimostrare UX, performance e architettura frontend
           senza dipendere da un backend commerce.
         </p>
@@ -48,7 +51,9 @@ export function ProductCatalog({ categories, products }: ProductCatalogProps): R
         filters={filters}
         maxPriceCents={maxPriceCents}
         onChange={setFilters}
+        onReset={() => setFilters(initialFilters)}
         resultCount={filteredProducts.length}
+        totalCount={products.length}
       />
       <ProductGrid onResetFilters={() => setFilters(initialFilters)} products={filteredProducts} />
     </section>

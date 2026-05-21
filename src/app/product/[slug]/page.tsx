@@ -52,7 +52,7 @@ export default async function ProductPage({ params }: ProductPageProps): Promise
       <div className="grid gap-4">
         <Image
           alt={product.name}
-          className="aspect-[4/3] w-full rounded-lg bg-stone-100 object-cover"
+          className="aspect-[4/3] w-full rounded-lg bg-stone-100 object-cover dark:bg-stone-900"
           height={900}
           src={withBasePath(product.imagePath)}
           width={1200}
@@ -61,7 +61,7 @@ export default async function ProductPage({ params }: ProductPageProps): Promise
           {product.gallery.slice(1).map((imagePath) => (
             <Image
               alt=""
-              className="aspect-[4/3] w-full rounded-lg bg-stone-100 object-cover"
+              className="aspect-[4/3] w-full rounded-lg bg-stone-100 object-cover dark:bg-stone-900"
               height={450}
               key={imagePath}
               src={withBasePath(imagePath)}
@@ -72,24 +72,30 @@ export default async function ProductPage({ params }: ProductPageProps): Promise
       </div>
       <div className="lg:pt-8">
         <Badge>{product.category}</Badge>
-        <h1 className="mt-4 text-4xl font-semibold text-stone-950">{product.name}</h1>
-        <p className="mt-4 text-lg leading-8 text-stone-600">{product.description}</p>
+        <h1 className="mt-4 text-4xl font-semibold text-stone-950 dark:text-white">
+          {product.name}
+        </h1>
+        <p className="mt-4 text-lg leading-8 text-stone-600 dark:text-stone-300">
+          {product.description}
+        </p>
         <div className="mt-6 flex items-center gap-4">
           <Price
             amountCents={product.priceCents}
-            className="text-2xl font-semibold text-stone-950"
+            className="text-2xl font-semibold text-stone-950 dark:text-white"
             compareAtCents={product.compareAtPriceCents}
           />
-          <span className="text-sm font-medium text-stone-500">
+          <span className="text-sm font-medium text-stone-500 dark:text-stone-400">
             {product.rating.toFixed(1)} / 5 da {product.reviewCount} recensioni
           </span>
         </div>
         <div className="mt-8">
           <AddToCartButton product={product} />
         </div>
-        <div className="mt-10 border-t border-stone-200 pt-8">
-          <h2 className="text-lg font-semibold text-stone-950">Dettagli prodotto</h2>
-          <ul className="mt-4 grid gap-3 text-stone-600">
+        <div className="mt-10 border-t border-stone-200 pt-8 dark:border-stone-800">
+          <h2 className="text-lg font-semibold text-stone-950 dark:text-white">
+            Dettagli prodotto
+          </h2>
+          <ul className="mt-4 grid gap-3 text-stone-600 dark:text-stone-300">
             {product.features.map((feature) => (
               <li className="flex gap-3" key={feature}>
                 <span aria-hidden="true" className="mt-2 h-2 w-2 rounded-full bg-emerald-700" />

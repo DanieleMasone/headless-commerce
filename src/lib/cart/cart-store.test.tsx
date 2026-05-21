@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { products } from "@/data/products";
@@ -74,5 +74,19 @@ describe("CartProvider", () => {
     fireEvent.click(screen.getByRole("button", { name: "add" }));
     fireEvent.click(screen.getByRole("button", { name: "clear" }));
     expect(screen.getByTestId("count")).toHaveTextContent("0");
+  });
+
+  it("persists cart item changes to localStorage", async () => {
+    render(
+      <CartProvider>
+        <CartStoreHarness />
+      </CartProvider>,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "add" }));
+
+    await waitFor(() => {
+      expect(window.localStorage.getItem(storageKey)).toContain(products[0].slug);
+    });
   });
 });

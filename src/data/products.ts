@@ -140,6 +140,9 @@ export const products = [
   },
 ] as const satisfies readonly Product[];
 
+/**
+ * Looks up a product for static product detail routes and metadata generation.
+ */
 export function getProductBySlug(slug: string): Product | undefined {
   return products.find((product) => product.slug === slug);
 }

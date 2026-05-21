@@ -13,7 +13,7 @@ export function Price({ amountCents, className, compareAtCents }: PriceProps): R
     <span className={cx("inline-flex items-baseline gap-2", className)}>
       <span>{formatPrice(amountCents)}</span>
       {compareAtCents ? (
-        <span className="text-sm font-medium text-stone-500 line-through">
+        <span className="text-sm font-medium text-stone-500 line-through dark:text-stone-400">
           {formatPrice(compareAtCents)}
         </span>
       ) : null}

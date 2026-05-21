@@ -3,6 +3,9 @@ import { withBasePath } from "@/lib/routing";
 
 export type MockCheckoutStatus = "failure" | "success";
 
+/**
+ * Input shape for browser-only Stripe Checkout session simulation.
+ */
 export interface MockCheckoutInput {
   readonly forceResult?: MockCheckoutStatus;
   readonly items: readonly CartLineItem[];
@@ -10,6 +13,9 @@ export interface MockCheckoutInput {
   readonly subtotalCents: number;
 }
 
+/**
+ * Mock session returned to the checkout UI without contacting Stripe.
+ */
 export interface MockCheckoutSession {
   readonly amountTotalCents: number;
   readonly checkoutUrl: string;

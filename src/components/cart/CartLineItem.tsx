@@ -24,10 +24,10 @@ export function CartLineItem({
   const { product, quantity } = item;
 
   return (
-    <article className="grid grid-cols-[72px_1fr] gap-4 border-b border-stone-200 py-4">
+    <article className="grid grid-cols-[72px_1fr] gap-4 border-b border-stone-200 py-4 dark:border-stone-800">
       <Image
         alt=""
-        className="h-[72px] w-[72px] rounded-md bg-stone-100 object-cover"
+        className="h-[72px] w-[72px] rounded-md bg-stone-100 object-cover dark:bg-stone-900"
         height={72}
         src={withBasePath(product.imagePath)}
         width={72}
@@ -35,8 +35,8 @@ export function CartLineItem({
       <div className="min-w-0">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h3 className="text-sm font-semibold text-stone-950">{product.name}</h3>
-            <p className="mt-1 text-xs text-stone-500">{product.category}</p>
+            <h3 className="text-sm font-semibold text-stone-950 dark:text-white">{product.name}</h3>
+            <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">{product.category}</p>
           </div>
           <Price amountCents={product.priceCents * quantity} className="text-sm font-semibold" />
         </div>

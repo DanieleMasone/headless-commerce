@@ -9,7 +9,17 @@ import { Drawer } from "@/components/ui/Drawer";
 import { Price } from "@/components/ui/Price";
 import { useCart } from "@/lib/cart/cart-store";
 
-export function CartDrawer(): ReactNode {
+/**
+ * Public props for the cart drawer shell rendered from the app layout.
+ */
+export interface CartDrawerProps {
+  readonly title?: string;
+}
+
+/**
+ * Accessible cart drawer bound to the global cart context.
+ */
+export function CartDrawer({ title = "Carrello" }: CartDrawerProps): ReactNode {
   const {
     clearCart,
     closeCart,
@@ -23,21 +33,25 @@ export function CartDrawer(): ReactNode {
   } = useCart();
 
   const hasItems = items.length > 0;
+  const itemLabel = itemCount === 1 ? "1 articolo" : `${itemCount} articoli`;
+  const statusMessage = hasItems
+    ? `${itemLabel} nel carrello, subtotale aggiornato.`
+    : "Il carrello è vuoto.";
 
   return (
     <Drawer
       footer={
         hasItems ? (
           <div className="space-y-4">
-            <div className="flex items-center justify-between text-base font-semibold text-stone-950">
+            <div className="flex items-center justify-between text-base font-semibold text-stone-950 dark:text-white">
               <span>Subtotale</span>
               <Price amountCents={subtotalCents} />
             </div>
-            <p className="text-sm text-stone-500">
+            <p className="text-sm text-stone-500 dark:text-stone-400">
               Checkout Stripe simulato: nessuna carta reale e nessuna chiamata server.
             </p>
             <Link
-              className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-stone-950 px-5 text-sm font-semibold text-white transition hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-stone-950 px-5 text-sm font-semibold text-white transition hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 dark:bg-emerald-400 dark:text-stone-950 dark:hover:bg-emerald-300"
               href="/checkout"
               onClick={closeCart}
             >
@@ -51,8 +65,11 @@ export function CartDrawer(): ReactNode {
       }
       isOpen={isOpen}
       onClose={closeCart}
-      title={`Carrello (${itemCount})`}
+      title={`${title} (${itemCount})`}
     >
+      <p aria-live="polite" className="sr-only">
+        {statusMessage}
+      </p>
       {hasItems ? (
         <div aria-live="polite">
           {items.map((item) => (
@@ -67,9 +84,11 @@ export function CartDrawer(): ReactNode {
         </div>
       ) : (
         <div className="flex min-h-64 flex-col items-center justify-center text-center">
-          <h3 className="text-lg font-semibold text-stone-950">Il carrello è vuoto</h3>
-          <p className="mt-2 max-w-xs text-sm text-stone-500">
-            Aggiungi un prodotto dal catalogo per iniziare il checkout demo.
+          <h3 className="text-lg font-semibold text-stone-950 dark:text-white">
+            Il carrello è vuoto
+          </h3>
+          <p className="mt-2 max-w-xs text-sm text-stone-500 dark:text-stone-400">
+            Salva qui gli articoli che vuoi confrontare e completa il checkout nella demo Stripe.
           </p>
           <Button className="mt-5" onClick={closeCart} variant="secondary">
             Continua lo shopping

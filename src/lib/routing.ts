@@ -12,7 +12,10 @@ export function getBasePath(): string {
 }
 
 /**
- * Prefixes public assets with the optional Next.js base path.
+ * Prefixes internal public paths with the optional Next.js base path.
+ *
+ * This is used for static assets and generated report links that are not
+ * resolved through Next.js route helpers.
  */
 export function withBasePath(path: string): string {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
