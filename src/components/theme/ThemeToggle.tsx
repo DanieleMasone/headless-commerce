@@ -16,13 +16,16 @@ export function ThemeToggle(): ReactNode {
     <Button
       aria-label={label}
       aria-pressed={isDark}
-      className="min-w-24"
+      className="min-w-14 sm:min-w-24"
       onClick={toggleTheme}
       size="sm"
-      suppressHydrationWarning
       variant="secondary"
     >
-      {isDark ? "Tema chiaro" : "Tema scuro"}
+      <span className="sm:hidden">Tema</span>
+      <span className="hidden sm:inline">
+        <span className="hidden dark:inline">Tema chiaro</span>
+        <span className="dark:hidden">Tema scuro</span>
+      </span>
     </Button>
   );
 }

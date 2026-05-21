@@ -92,10 +92,11 @@ export function Drawer({
   return (
     <div className="fixed inset-0 z-50" role="presentation">
       <button
-        aria-label="Chiudi carrello"
+        aria-hidden="true"
         className="absolute inset-0 cursor-default bg-stone-950/55"
         data-testid="drawer-overlay"
         onClick={onClose}
+        tabIndex={-1}
         type="button"
       />
       <aside
@@ -106,6 +107,7 @@ export function Drawer({
           "absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-white shadow-2xl outline-none dark:bg-stone-950",
           className,
         )}
+        id="cart-drawer"
         onKeyDown={handleKeyDown}
         role="dialog"
       >

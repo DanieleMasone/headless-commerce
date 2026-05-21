@@ -20,7 +20,6 @@ export interface Product {
   readonly tagline: string;
   readonly description: string;
   readonly features: readonly string[];
-  readonly inventory: number;
   readonly rating: number;
   readonly reviewCount: number;
   readonly featuredRank: number;

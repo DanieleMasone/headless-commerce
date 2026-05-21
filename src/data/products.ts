@@ -20,7 +20,6 @@ export const products = [
     description:
       "A modular desk kit with a matte organizer rail, magnetic cable routing, and a low-profile charging shelf for high-output workdays.",
     features: ["Magnetic cable rail", "Anodized aluminum tray", "Qi-ready shelf"],
-    inventory: 18,
     rating: 4.9,
     reviewCount: 128,
     featuredRank: 1,
@@ -36,7 +35,6 @@ export const products = [
     description:
       "Hybrid active noise cancellation, beamforming microphones, and soft-touch controls tuned for work calls and long listening sessions.",
     features: ["42-hour battery", "Hybrid ANC", "Dual-device pairing"],
-    inventory: 24,
     rating: 4.8,
     reviewCount: 94,
     featuredRank: 2,
@@ -53,7 +51,6 @@ export const products = [
     description:
       "A lightweight shell, removable tech pod, and location-ready ID plate keep business travel organized without looking overbuilt.",
     features: ["Removable tech pod", "Silent spinner wheels", "Recycled polycarbonate"],
-    inventory: 9,
     rating: 4.7,
     reviewCount: 61,
     featuredRank: 3,
@@ -69,7 +66,6 @@ export const products = [
     description:
       "A compact aluminum desk lamp with warm-to-cool dimming, memory presets, and a weighted base that stays planted.",
     features: ["Five dimming levels", "Warm-to-cool range", "Memory preset"],
-    inventory: 31,
     rating: 4.6,
     reviewCount: 77,
     featuredRank: 5,
@@ -85,7 +81,6 @@ export const products = [
     description:
       "A powder-coated steel bottle with a low-noise lid, one-hand carry loop, and volume marks for long office days.",
     features: ["24-hour cold hold", "Low-noise lid", "Dishwasher-safe cap"],
-    inventory: 46,
     rating: 4.8,
     reviewCount: 142,
     featuredRank: 6,
@@ -101,7 +96,6 @@ export const products = [
     description:
       "A vegan leather charging mat with dual wireless coils and a stitched cable channel for cleaner surfaces.",
     features: ["Dual wireless coils", "Stitched cable channel", "Non-slip backing"],
-    inventory: 27,
     rating: 4.5,
     reviewCount: 53,
     featuredRank: 4,
@@ -117,7 +111,6 @@ export const products = [
     description:
       "A water-resistant commuter backpack with a suspended laptop bay, document sleeve, and fast-access side pocket.",
     features: ["Suspended laptop bay", "Water-resistant shell", "Fast-access pocket"],
-    inventory: 16,
     rating: 4.7,
     reviewCount: 88,
     featuredRank: 7,
@@ -133,7 +126,6 @@ export const products = [
     description:
       "A lay-flat weekly planner with roadmap spreads, meeting capture pages, and recycled heavyweight paper.",
     features: ["Lay-flat binding", "Roadmap spreads", "Recycled paper stock"],
-    inventory: 52,
     rating: 4.6,
     reviewCount: 49,
     featuredRank: 8,

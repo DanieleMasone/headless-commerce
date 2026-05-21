@@ -13,7 +13,8 @@ export function SiteHeader(): ReactNode {
     <header className="sticky top-0 z-40 border-b border-stone-200 bg-white/95 backdrop-blur dark:border-stone-800 dark:bg-stone-950/90">
       <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link className="text-base font-bold text-stone-950 dark:text-white" href="/">
-          Headless Commerce
+          <span className="sm:hidden">HC</span>
+          <span className="hidden sm:inline">Headless Commerce</span>
         </Link>
         <nav
           aria-label="Navigazione principale"

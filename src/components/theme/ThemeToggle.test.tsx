@@ -13,7 +13,20 @@ function renderThemeToggle(): void {
 }
 
 describe("ThemeToggle", () => {
+  it("uses the stored dark theme on initial render and exposes the next action", async () => {
+    window.localStorage.setItem("headless-commerce-theme", "dark");
+
+    renderThemeToggle();
+
+    expect(await screen.findByRole("button", { name: "Attiva tema chiaro" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    await waitFor(() => expect(document.documentElement).toHaveClass("dark"));
+  });
+
   it("toggles dark mode and persists the choice", async () => {
+    window.localStorage.setItem("headless-commerce-theme", "light");
     renderThemeToggle();
 
     const toggle = await screen.findByRole("button", { name: "Attiva tema scuro" });
@@ -22,6 +35,7 @@ describe("ThemeToggle", () => {
     expect(document.documentElement).toHaveClass("dark");
     expect(window.localStorage.getItem("headless-commerce-theme")).toBe("dark");
     expect(toggle).toHaveAccessibleName("Attiva tema chiaro");
+    expect(toggle).toHaveAttribute("aria-pressed", "true");
   });
 
   it("uses prefers-color-scheme when no stored preference exists", async () => {

@@ -153,7 +153,7 @@ npm run expose:reports
 
 ## Trade-Offs
 
-- Static export means no runtime personalization, inventory freshness, server-side redirects, API routes, or optimized Next image server.
+- Static export means no runtime personalization, live catalog freshness, server-side redirects, API routes, or optimized Next image server.
 - Search/filtering runs client-side over a small local catalog; a larger catalog would need precomputed indexes or an external search service.
 - The checkout does not create real Stripe sessions. It demonstrates integration shape and UX states only.
 - Generated `docs/` and `coverage/` are not committed. They are created in CI and copied into `out/` for Pages deployment.

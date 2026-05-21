@@ -23,6 +23,7 @@ describe("CartButton", () => {
     expect(
       screen.getByRole("button", { name: /Apri carrello, 2 articoli, totale/ }),
     ).toBeInTheDocument();
-    expect(screen.queryByText(/Subtotale in centesimi/)).not.toBeInTheDocument();
+    expect(screen.getByRole("button")).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByRole("button")).toHaveAttribute("aria-controls", "cart-drawer");
   });
 });

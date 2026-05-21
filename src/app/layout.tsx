@@ -10,6 +10,24 @@ import { ThemeProvider } from "@/lib/theme/theme-store";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://headless-commerce.example";
+const themeInitScript = `
+(() => {
+  try {
+    const storedTheme = window.localStorage.getItem("headless-commerce-theme");
+    const theme =
+      storedTheme === "dark" || storedTheme === "light"
+        ? storedTheme
+        : window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    document.documentElement.style.colorScheme = theme;
+  } catch {
+    document.documentElement.classList.remove("dark");
+    document.documentElement.style.colorScheme = "light";
+  }
+})();
+`;
 
 export const metadata: Metadata = {
   description:
@@ -29,6 +47,7 @@ export default function RootLayout({
   return (
     <html data-scroll-behavior="smooth" lang="it" suppressHydrationWarning>
       <body>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <ThemeProvider>
           <CartProvider>
             <a

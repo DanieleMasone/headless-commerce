@@ -18,5 +18,6 @@
   "excludePrivate": true,
   "hideGenerator": true,
   "out": "docs",
-  "plugin": []
+  "plugin": [],
+  "tsconfig": "tsconfig.typedoc.json"
 }

@@ -1,0 +1,36 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "react", "react-dom"]
+  },
+  "include": [
+    "src/components/cart/**/*.ts",
+    "src/components/cart/**/*.tsx",
+    "src/components/product/**/*.ts",
+    "src/components/product/**/*.tsx",
+    "src/components/theme/**/*.ts",
+    "src/components/theme/**/*.tsx",
+    "src/components/ui/**/*.ts",
+    "src/components/ui/**/*.tsx",
+    "src/lib/cart/**/*.ts",
+    "src/lib/cart/**/*.tsx",
+    "src/lib/checkout/**/*.ts",
+    "src/lib/products/**/*.ts",
+    "src/lib/theme/**/*.ts",
+    "src/lib/theme/**/*.tsx",
+    "src/lib/format.ts",
+    "src/lib/routing.ts",
+    "src/types/**/*.ts"
+  ],
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    ".next",
+    "coverage",
+    "docs",
+    "node_modules",
+    "out",
+    "playwright-report",
+    "test-results"
+  ]
+}
