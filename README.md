@@ -3,131 +3,113 @@
 [![CI and GitHub Pages](https://github.com/danielemasone/headless-commerce/actions/workflows/ci-pages.yml/badge.svg?branch=master)](https://github.com/danielemasone/headless-commerce/actions/workflows/ci-pages.yml)
 ![Coverage gated](https://img.shields.io/badge/coverage-gated%2080%25%2B-0f766e)
 
-Enterprise-grade portfolio project for a static headless commerce frontend built with Next.js App Router, strict TypeScript, Tailwind CSS, Vitest, Playwright, TypeDoc, and GitHub Pages.
+Static headless commerce frontend built with **Next.js App Router**, **strict TypeScript**, **Tailwind CSS**, **Vitest**, **Playwright**, **TypeDoc**, and **GitHub Pages**.
 
-The app is intentionally frontend-only: product data is local, the cart is persisted in `localStorage`, checkout simulates Stripe session creation in the browser, and the production deploy does not require API routes, Server Actions, SSR runtime, or private keys.
+The project is intentionally frontend-only: product data is local, cart state is persisted in `localStorage`, checkout is simulated in the browser, and the production deployment requires no server runtime.
 
-## Live Links
+## Live
 
-- Demo: [danielemasone.github.io/headless-commerce](https://danielemasone.github.io/headless-commerce/)
-- Coverage report: [danielemasone.github.io/headless-commerce/coverage](https://danielemasone.github.io/headless-commerce/coverage/)
-- TypeDoc documentation: [danielemasone.github.io/headless-commerce/docs](https://danielemasone.github.io/headless-commerce/docs/)
+- Demo: https://danielemasone.github.io/headless-commerce/
+- Coverage: https://danielemasone.github.io/headless-commerce/coverage/
+- Docs: https://danielemasone.github.io/headless-commerce/docs/
 
-## Why This Project Matters
+## Why This Project Exists
 
-Most portfolio commerce demos stop at a product grid. This project shows the parts that matter in production frontend work: fast catalog interactions, accessible cart behavior, static deployment constraints, repeatable CI, coverage gates, public generated docs, and a clean modular architecture.
+Most portfolio commerce demos stop at a product grid. This project focuses on the parts that matter in real frontend work:
 
-## Architecture Goals
-
-- Static export compatible with GitHub Pages.
-- Conversion-oriented catalog UX with search, filters, and a cart drawer instead of a separate cart page.
-- Local mock data that can later be replaced by a CMS or commerce API.
-- Reducer-driven cart state with Context, no Redux or Zustand.
-- Strict TypeScript boundaries across data, UI, cart, checkout, routing, and theme modules.
-- CI that validates formatting, linting, types, coverage, E2E, docs, static export, and public report exposure.
-
-## Tech Stack
-
-- Next.js App Router with `output: "export"`.
-- React and TypeScript strict mode.
-- Tailwind CSS for responsive light and dark themes.
-- Vitest and React Testing Library for unit/component tests.
-- Playwright for E2E shopper flows.
-- ESLint and Prettier for code quality.
-- TypeDoc for generated API/component documentation.
-- GitHub Actions and GitHub Pages for CI/CD.
+- conversion-oriented catalog UX
+- accessible cart interaction
+- static deployment constraints
+- predictable state management
+- automated tests and coverage gates
+- generated technical documentation
+- CI/CD suitable for a public portfolio project
 
 ## Features
 
-- Homepage catalog with premium hero, product grid, client-side search, category filter, price filter, sorting, reset filters, and readable result counts.
-- Static product detail route at `/product/[slug]` with `generateStaticParams` and per-product SEO metadata.
-- Accessible cart drawer with `aria-modal`, focus management, Escape close, overlay close, quantity changes, subtotal, `aria-live` updates, and persistence.
-- Dark mode with persisted toggle and `prefers-color-scheme` fallback.
-- Mock Stripe checkout at `/checkout` with success and failure states, fully client-side.
-- Public Coverage and Docs links in the deployed site header/footer.
-- Base path aware public assets for `https://<user>.github.io/<repo>/` deployments.
+- Product catalog with search, filters, sorting, reset state, and result count.
+- Static product detail pages generated from local product data.
+- Accessible cart drawer with keyboard support, focus management, overlay close, Escape close, quantity controls, subtotal, and `aria-live` updates.
+- Dark mode with persisted user preference and `prefers-color-scheme` fallback.
+- Mock checkout flow with success and failure states.
+- Public coverage and TypeDoc documentation published with GitHub Pages.
+- Base path aware routing and assets for project-page deployment.
 
-## GitHub Pages And Static Export
+## Tech Stack
 
-`next.config.ts` is configured with:
+- Next.js App Router with static export
+- React
+- TypeScript strict mode
+- Tailwind CSS
+- Vitest
+- React Testing Library
+- Playwright
+- TypeDoc
+- ESLint
+- Prettier
+- GitHub Actions
+- GitHub Pages
 
-- `output: "export"` so `next build` produces `out/`.
-- `images: { unoptimized: true }` because GitHub Pages has no Next image optimization server.
-- `trailingSlash: true` for static route compatibility.
-- optional `basePath` and `assetPrefix` from `NEXT_PUBLIC_BASE_PATH`.
+## Static Export Constraints
 
-For project pages, set:
+The app is designed for GitHub Pages and uses:
+
+- `output: "export"`
+- `images: { unoptimized: true }`
+- `trailingSlash: true`
+- optional `basePath` and `assetPrefix` from `NEXT_PUBLIC_BASE_PATH`
+
+For this repository deployment:
 
 ```bash
 NEXT_PUBLIC_BASE_PATH=/headless-commerce
 ```
 
-For user or organization pages published at the root domain, leave it empty.
+Because the app is statically exported, it does not use:
 
-## Local Commands
+- API routes
+- Server Actions
+- SSR runtime
+- private server-side secrets
+- Next.js image optimization server
+
+## Getting Started
 
 ```bash
 npm ci
 npm run dev
+```
+
+Build the static site:
+
+```bash
 npm run build
-npm run start
-npm run lint
-npm run format
-npm run format:check
-npm run typecheck
-npm run test
-npm run test:watch
-npm run test:coverage
-npm run test:e2e
-npm run docs
-npm run docs:clean
-npm run expose:reports
-npm run deploy:check
+```
+
+Run the full validation pipeline:
+
+```bash
 npm run ci
 ```
 
-`npm run start` serves the already generated `out/` folder with a small local static server. It is not a production Node runtime requirement.
+## Available Scripts
 
-## Test Strategy And Coverage Gates
+| Command | Description |
+|---|---|
+| `npm run dev` | Start local development |
+| `npm run build` | Build the static export |
+| `npm run start` | Serve the generated `out/` folder locally |
+| `npm run lint` | Run ESLint |
+| `npm run format:check` | Check formatting |
+| `npm run typecheck` | Run TypeScript validation |
+| `npm run test` | Run unit/component tests |
+| `npm run test:coverage` | Run tests with coverage |
+| `npm run test:e2e` | Run Playwright tests |
+| `npm run docs` | Generate TypeDoc documentation |
+| `npm run expose:reports` | Copy docs and coverage into `out/` |
+| `npm run ci` | Run the complete CI validation flow |
 
-Vitest coverage is generated in `coverage/` and enforces:
-
-- statements >= 80
-- branches >= 75
-- functions >= 80
-- lines >= 80
-
-The suite covers the cart reducer, cart persistence, price formatter, routing helpers, product search/filter/sort, dark mode toggle, mock checkout, ProductCard, ProductFilters, CartButton, and CartDrawer. Playwright covers the shopper path from homepage search and filtering through cart quantity changes and mock checkout.
-
-After `npm run ci`, the HTML coverage report is copied into `out/coverage/`, so it is published publicly with the GitHub Pages site.
-
-## Documentation
-
-TypeDoc generates API/component documentation in `docs/`:
-
-```bash
-npm run docs
-```
-
-Documented areas include the product model, cart types, cart reducer, cart provider/hooks, checkout mock, routing/basePath helpers, formatter utilities, ProductFilters props, and CartDrawer props.
-
-After `npm run ci`, generated documentation is copied into `out/docs/`, so it is published publicly with the GitHub Pages site.
-
-## CI/CD
-
-`.github/workflows/ci-pages.yml` runs on pull requests and pushes to `master` or `main`, then deploys only when the push targets the repository default branch.
-
-Pipeline:
-
-1. Check out the repository.
-2. Configure GitHub Pages for deployable pushes.
-3. Set up Node.js from `.node-version` (`24.15.0`).
-4. Run `npm ci`.
-5. Install Playwright Chromium and system dependencies.
-6. Run `npm run ci`.
-7. Upload coverage and docs artifacts for inspection.
-8. Upload `out/` as the GitHub Pages artifact.
-9. Deploy with `actions/deploy-pages`.
+## Quality Gates
 
 `npm run ci` runs:
 
@@ -142,21 +124,53 @@ npm run build
 npm run expose:reports
 ```
 
-## Technical Decisions
+Coverage thresholds:
 
-- Context plus `useReducer` keeps cart state explicit, testable, and small.
-- Product data stays in `src/data/products.ts` to keep the export deterministic.
-- Public asset and report URLs pass through `withBasePath` so GitHub Pages project paths work.
-- Checkout is a browser-only Stripe mock to avoid secret handling and server endpoints.
-- No extra UI/state libraries are used; the requested stack is enough for this scope.
-- Dark mode is implemented with a small local provider instead of adding a theme dependency.
+| Metric | Minimum |
+|---|---:|
+| Statements | 80% |
+| Branches | 75% |
+| Functions | 80% |
+| Lines | 80% |
+
+The test suite covers cart state, cart persistence, formatting utilities, routing helpers, product search/filter/sort, dark mode behavior, checkout mock, product cards, filters, cart controls, and the cart drawer.
+
+## Documentation
+
+TypeDoc generates technical documentation in `docs/`:
+
+```bash
+npm run docs
+```
+
+During CI, documentation is copied into:
+
+```txt
+out/docs/
+```
+
+Coverage is copied into:
+
+```txt
+out/coverage/
+```
+
+Both are deployed publicly with the GitHub Pages artifact.
+
+## Architecture Notes
+
+- Product data lives in `src/data/products.ts` to keep the static export deterministic.
+- Cart state uses React Context plus `useReducer` for explicit and testable state transitions.
+- Checkout is a browser-only Stripe-style mock to avoid server endpoints and secret handling.
+- Public URLs use base-path-aware helpers so the app works under `/headless-commerce/`.
+- Dark mode is implemented locally instead of adding a theme library.
+- UI/state dependencies are intentionally minimal.
 
 ## Trade-Offs
 
-- Static export means no runtime personalization, live catalog freshness, server-side redirects, API routes, or optimized Next image server.
-- Search/filtering runs client-side over a small local catalog; a larger catalog would need precomputed indexes or an external search service.
-- The checkout does not create real Stripe sessions. It demonstrates integration shape and UX states only.
-- Generated `docs/` and `coverage/` are not committed. They are created in CI and copied into `out/` for Pages deployment.
+- Static export prevents runtime personalization, live inventory, API routes, server redirects, and server-side image optimization.
+- Client-side search and filtering are appropriate for a small local catalog.
+- Checkout demonstrates frontend integration shape only.
 
 ## License
 
