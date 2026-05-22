@@ -94,20 +94,20 @@ npm run ci
 
 ## Available Scripts
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start local development |
-| `npm run build` | Build the static export |
-| `npm run start` | Serve the generated `out/` folder locally |
-| `npm run lint` | Run ESLint |
-| `npm run format:check` | Check formatting |
-| `npm run typecheck` | Run TypeScript validation |
-| `npm run test` | Run unit/component tests |
-| `npm run test:coverage` | Run tests with coverage |
-| `npm run test:e2e` | Run Playwright tests |
-| `npm run docs` | Generate TypeDoc documentation |
-| `npm run expose:reports` | Copy docs and coverage into `out/` |
-| `npm run ci` | Run the complete CI validation flow |
+| Command                  | Description                               |
+| ------------------------ | ----------------------------------------- |
+| `npm run dev`            | Start local development                   |
+| `npm run build`          | Build the static export                   |
+| `npm run start`          | Serve the generated `out/` folder locally |
+| `npm run lint`           | Run ESLint                                |
+| `npm run format:check`   | Check formatting                          |
+| `npm run typecheck`      | Run TypeScript validation                 |
+| `npm run test`           | Run unit/component tests                  |
+| `npm run test:coverage`  | Run tests with coverage                   |
+| `npm run test:e2e`       | Run Playwright tests                      |
+| `npm run docs`           | Generate TypeDoc documentation            |
+| `npm run expose:reports` | Copy docs and coverage into `out/`        |
+| `npm run ci`             | Run the complete CI validation flow       |
 
 ## Quality Gates
 
@@ -126,12 +126,12 @@ npm run expose:reports
 
 Coverage thresholds:
 
-| Metric | Minimum |
-|---|---:|
-| Statements | 80% |
-| Branches | 75% |
-| Functions | 80% |
-| Lines | 80% |
+| Metric     | Minimum |
+| ---------- | ------: |
+| Statements |     80% |
+| Branches   |     75% |
+| Functions  |     80% |
+| Lines      |     80% |
 
 The test suite covers cart state, cart persistence, formatting utilities, routing helpers, product search/filter/sort, dark mode behavior, checkout mock, product cards, filters, cart controls, and the cart drawer.
 
