@@ -73,8 +73,8 @@ async function expectNoHorizontalOverflow(page: Page): Promise<void> {
 }
 
 test("shopper searches, filters, edits cart quantity, and completes mock checkout", async ({
-                                                                                             page,
-                                                                                           }) => {
+  page,
+}) => {
   await installInitialBrowserState(page);
   await gotoHome(page);
 
@@ -195,8 +195,8 @@ test("keeps the cart drawer accessible when closing and emptying the cart", asyn
 });
 
 test("supports the core catalog and cart flow on mobile without horizontal overflow", async ({
-                                                                                               page,
-                                                                                             }) => {
+  page,
+}) => {
   await page.setViewportSize({ height: 844, width: 390 });
   await installInitialBrowserState(page);
   await gotoHome(page);
