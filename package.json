@@ -18,7 +18,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "playwright install chromium && playwright test",
+    "test:e2e": "playwright install --with-deps chromium && playwright test",
     "docs": "npm run docs:clean && typedoc",
     "docs:clean": "node scripts/clean-docs.mjs",
     "expose:reports": "node scripts/expose-reports.mjs",

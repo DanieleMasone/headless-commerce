@@ -14,6 +14,8 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     exclude: ["**/node_modules/**", "**/.next/**", "**/out/**", "e2e/**"],
+    // Avoid fork startup timeouts on constrained CI and Windows runners.
+    fileParallelism: false,
     globals: true,
     setupFiles: ["./src/test/setup.ts"],
     coverage: {

@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const port = Number(process.env.PORT ?? 3000);
+const port = Number(process.env.PORT ?? 3100);
 
 export default defineConfig({
   testDir: "./e2e",
@@ -15,7 +15,7 @@ export default defineConfig({
   webServer: {
     command: `npm run dev -- --hostname 127.0.0.1 --port ${port}`,
     url: `http://127.0.0.1:${port}${basePath || "/"}`,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 120_000,
   },
   projects: [
