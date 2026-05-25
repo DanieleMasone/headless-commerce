@@ -37,11 +37,11 @@ Use only scripts that exist in `package.json`:
 - `npm run test`: run Vitest once.
 - `npm run test:watch`: run Vitest in watch mode.
 - `npm run test:coverage`: run Vitest with coverage gates and HTML report generation.
-- `npm run test:e2e`: install Playwright Chromium if needed and run E2E tests.
+- `npm run test:e2e`: run Playwright E2E tests against the generated `out/` static export. Run `npx playwright install chromium` once and `npm run build` first when using it outside `npm run ci`.
 - `npm run docs`: clean and generate TypeDoc HTML documentation into `docs/`.
 - `npm run docs:clean`: remove generated TypeDoc output.
 - `npm run expose:reports`: copy generated docs and coverage into `out/docs/` and `out/coverage/`.
-- `npm run ci`: run format check, lint, typecheck, coverage tests, E2E tests, docs, build, and report exposure.
+- `npm run ci`: run format check, lint, typecheck, coverage tests, docs, build, report exposure, E2E tests, and static export assertions.
 - `npm run deploy:check`: verify coverage, docs, static build, report exposure, and export integrity.
 
 ## Static Export Constraints
@@ -192,6 +192,7 @@ For code changes, the task is done only when:
 - TypeDoc generation passes with `npm run docs`
 - static export build passes with `npm run build`
 - public reports are exposed with `npm run expose:reports`
+- static export output is asserted with `node scripts/assert-static-export.mjs`
 - `npm run ci` passes when the change affects application code, tests, docs generation, build, or deployment
 - homepage, product detail, checkout, `/coverage/`, and `/docs/` links remain valid under `NEXT_PUBLIC_BASE_PATH=/headless-commerce`
 - no server runtime, API route, Server Action, or GitHub Pages regression has been introduced

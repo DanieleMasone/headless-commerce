@@ -5,6 +5,13 @@ import { extname, join, normalize, resolve } from "node:path";
 
 const root = resolve("out");
 const port = Number(process.env.PORT ?? 4173);
+const closeWhenIdle = process.argv.includes("--e2e");
+const idleTimeoutMs = 10_000;
+const rawBasePath = process.env.NEXT_PUBLIC_BASE_PATH?.trim() ?? "";
+const basePath =
+  rawBasePath.length === 0 || rawBasePath === "/"
+    ? ""
+    : `/${rawBasePath.replace(/^\/+|\/+$/g, "")}`;
 
 const contentTypes = new Map([
   [".css", "text/css; charset=utf-8"],
@@ -18,7 +25,11 @@ const contentTypes = new Map([
 
 async function resolveStaticPath(requestUrl) {
   const url = new URL(requestUrl, `http://127.0.0.1:${port}`);
-  const safePath = normalize(decodeURIComponent(url.pathname)).replace(/^(\.\.[/\\])+/, "");
+  const pathname =
+    basePath && (url.pathname === basePath || url.pathname.startsWith(`${basePath}/`))
+      ? url.pathname.slice(basePath.length) || "/"
+      : url.pathname;
+  const safePath = normalize(decodeURIComponent(pathname)).replace(/^(\.\.[/\\])+/, "");
   const candidate = resolve(join(root, safePath));
 
   if (!candidate.startsWith(root)) {
@@ -40,7 +51,22 @@ async function resolveStaticPath(requestUrl) {
   return null;
 }
 
-createServer(async (request, response) => {
+let idleTimer;
+
+function scheduleIdleShutdown(server) {
+  if (!closeWhenIdle) {
+    return;
+  }
+
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => {
+    server.close(() => process.exit(0));
+  }, idleTimeoutMs);
+}
+
+const server = createServer(async (request, response) => {
+  response.on("finish", () => scheduleIdleShutdown(server));
+
   const filePath = await resolveStaticPath(request.url ?? "/");
 
   if (!filePath) {
@@ -59,6 +85,9 @@ createServer(async (request, response) => {
     response.writeHead(404);
     response.end("Not found");
   }
-}).listen(port, "127.0.0.1", () => {
+});
+
+server.listen(port, "127.0.0.1", () => {
   console.log(`Static export available at http://127.0.0.1:${port}`);
+  scheduleIdleShutdown(server);
 });

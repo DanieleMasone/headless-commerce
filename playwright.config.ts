@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const port = Number(process.env.PORT ?? 3100);
+const port = Number(process.env.PORT ?? 4173);
 
 export default defineConfig({
   testDir: "./e2e",
@@ -13,7 +13,7 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   webServer: {
-    command: `npm run dev -- --hostname 127.0.0.1 --port ${port}`,
+    command: "node scripts/serve-static.mjs --e2e",
     url: `http://127.0.0.1:${port}${basePath || "/"}`,
     reuseExistingServer: false,
     timeout: 120_000,

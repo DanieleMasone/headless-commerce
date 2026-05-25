@@ -86,6 +86,14 @@ Build the static site:
 npm run build
 ```
 
+Run E2E tests against the generated static export:
+
+```bash
+npx playwright install chromium
+npm run build
+npm run test:e2e
+```
+
 Run the full validation pipeline:
 
 ```bash
@@ -118,10 +126,11 @@ npm run format:check
 npm run lint
 npm run typecheck
 npm run test:coverage
-npm run test:e2e
 npm run docs
 npm run build
 npm run expose:reports
+npm run test:e2e
+node scripts/assert-static-export.mjs
 ```
 
 Coverage thresholds:

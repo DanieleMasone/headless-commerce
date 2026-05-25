@@ -27,8 +27,15 @@ const test = base.extend<{ criticalConsoleErrors: void }>({
 async function installInitialBrowserState(page: Page, theme: ThemeMode = "light"): Promise<void> {
   await page.addInitScript(
     ({ cartKey, selectedTheme, themeKey }) => {
+      const resetKey = "headless-commerce-e2e-reset";
+
+      if (window.sessionStorage.getItem(resetKey)) {
+        return;
+      }
+
       window.localStorage.removeItem(cartKey);
       window.localStorage.setItem(themeKey, selectedTheme);
+      window.sessionStorage.setItem(resetKey, "true");
     },
     { cartKey: cartStorageKey, selectedTheme: theme, themeKey: themeStorageKey },
   );
