@@ -194,5 +194,5 @@ For code changes, the task is done only when:
 - public reports are exposed with `npm run expose:reports`
 - static export output is asserted with `node scripts/assert-static-export.mjs`
 - `npm run ci` passes when the change affects application code, tests, docs generation, build, or deployment
-- homepage, product detail, checkout, `/coverage/`, and `/docs/` links remain valid under `NEXT_PUBLIC_BASE_PATH=/headless-commerce`
+- homepage, `/engineering/`, product detail, checkout, `/coverage/`, and `/docs/` links remain valid under `NEXT_PUBLIC_BASE_PATH=/headless-commerce`
 - no server runtime, API route, Server Action, or GitHub Pages regression has been introduced

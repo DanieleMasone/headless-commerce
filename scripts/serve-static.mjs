@@ -6,7 +6,7 @@ import { extname, join, normalize, resolve } from "node:path";
 const root = resolve("out");
 const port = Number(process.env.PORT ?? 4173);
 const closeWhenIdle = process.argv.includes("--e2e");
-const idleTimeoutMs = 10_000;
+const idleTimeoutMs = 30_000;
 const rawBasePath = process.env.NEXT_PUBLIC_BASE_PATH?.trim() ?? "";
 const basePath =
   rawBasePath.length === 0 || rawBasePath === "/"
@@ -88,6 +88,5 @@ const server = createServer(async (request, response) => {
 });
 
 server.listen(port, "127.0.0.1", () => {
-  console.log(`Static export available at http://127.0.0.1:${port}`);
-  scheduleIdleShutdown(server);
+  console.info(`Static export available at http://127.0.0.1:${port}`);
 });

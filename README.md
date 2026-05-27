@@ -10,6 +10,7 @@ The project is intentionally frontend-only: product data is local, cart state is
 ## Live
 
 - Demo: https://danielemasone.github.io/headless-commerce/
+- Engineering: https://danielemasone.github.io/headless-commerce/engineering/
 - Coverage: https://danielemasone.github.io/headless-commerce/coverage/
 - Docs: https://danielemasone.github.io/headless-commerce/docs/
 
@@ -33,6 +34,7 @@ Most portfolio commerce demos stop at a product grid. This project focuses on th
 - Dark mode with persisted user preference and `prefers-color-scheme` fallback.
 - Mock checkout flow with success and failure states.
 - Public coverage and TypeDoc documentation published with GitHub Pages.
+- Engineering Quality page that documents CI/CD, coverage, accessibility, E2E scope, and static export trade-offs.
 - Base path aware routing and assets for project-page deployment.
 
 ## Tech Stack

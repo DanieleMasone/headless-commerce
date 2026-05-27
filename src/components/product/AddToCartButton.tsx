@@ -11,10 +11,15 @@ export interface AddToCartButtonProps {
 }
 
 export function AddToCartButton({ product }: AddToCartButtonProps): ReactNode {
-  const { addItem } = useCart();
+  const { addItem, openCart } = useCart();
+
+  function handleAddToCart(): void {
+    addItem(product);
+    openCart();
+  }
 
   return (
-    <Button aria-label={`Aggiungi ${product.name} al carrello`} onClick={() => addItem(product)}>
+    <Button aria-label={`Aggiungi ${product.name} al carrello`} onClick={handleAddToCart}>
       Aggiungi al carrello
     </Button>
   );

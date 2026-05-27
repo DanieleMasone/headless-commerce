@@ -45,6 +45,12 @@ async function gotoHome(page: Page): Promise<void> {
   await page.goto(`${basePath}/`);
 }
 
+function pathPattern(path: string): RegExp {
+  const escapedPath = path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  return new RegExp(`${escapedPath}/?$`);
+}
+
 async function expectTheme(page: Page, theme: ThemeMode): Promise<void> {
   const html = page.locator("html");
 
@@ -172,6 +178,32 @@ test("shows an empty search state and resets back to the full catalog", async ({
   await expect(page.getByLabel("Cerca prodotti")).toHaveValue("");
   await expect(page.getByText("8 prodotti trovati su 8 nel catalogo statico.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Atlas Modular Desk Kit" })).toBeVisible();
+});
+
+test("surfaces engineering quality details and public report links", async ({ page }) => {
+  await installInitialBrowserState(page);
+  await gotoHome(page);
+
+  await page.getByRole("contentinfo").getByRole("link", { name: "Engineering" }).click();
+
+  await expect(page).toHaveURL(pathPattern(`${basePath}/engineering`));
+  await expect(page.getByRole("heading", { name: /Qualit. tecnica visibile/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Demo homepage" })).toHaveAttribute(
+    "href",
+    `${basePath}/`,
+  );
+  await expect(page.getByRole("link", { name: "GitHub Actions workflow" })).toHaveAttribute(
+    "href",
+    /github\.com\/danielemasone\/headless-commerce\/actions\/workflows\/ci-pages\.yml/,
+  );
+  await expect(page.getByRole("link", { name: "Coverage report" })).toHaveAttribute(
+    "href",
+    `${basePath}/coverage/`,
+  );
+  await expect(page.getByRole("link", { name: "TypeDoc docs" })).toHaveAttribute(
+    "href",
+    `${basePath}/docs/`,
+  );
 });
 
 test("keeps the cart drawer accessible when closing and emptying the cart", async ({ page }) => {
