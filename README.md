@@ -10,6 +10,7 @@ The project is intentionally frontend-only: product data is local, cart state is
 ## Live
 
 - Demo: https://danielemasone.github.io/headless-commerce/
+- Guide: https://danielemasone.github.io/headless-commerce/guide/
 - Engineering: https://danielemasone.github.io/headless-commerce/engineering/
 - Coverage: https://danielemasone.github.io/headless-commerce/coverage/
 - Docs: https://danielemasone.github.io/headless-commerce/docs/
@@ -30,11 +31,10 @@ Most portfolio commerce demos stop at a product grid. This project focuses on th
 
 - Product catalog with search, filters, sorting, reset state, and result count.
 - Static product detail pages generated from local product data.
-- Accessible cart drawer with keyboard support, focus management, overlay close, Escape close, quantity controls, subtotal, and `aria-live` updates.
+- Accessible cart drawer with persistence, quantity controls, formatted subtotal, focus management, and `aria-live` updates.
 - Dark mode with persisted user preference and `prefers-color-scheme` fallback.
 - Mock checkout flow with success and failure states.
-- Public coverage and TypeDoc documentation published with GitHub Pages.
-- Engineering Quality page that documents CI/CD, coverage, accessibility, E2E scope, and static export trade-offs.
+- Public guide, engineering notes, coverage report, and TypeDoc reference published with GitHub Pages.
 - Base path aware routing and assets for project-page deployment.
 
 ## Tech Stack
@@ -148,7 +148,14 @@ The test suite covers cart state, cart persistence, formatting utilities, routin
 
 ## Documentation
 
-TypeDoc generates technical documentation in `docs/`:
+Public documentation is intentionally split by audience:
+
+- `/guide/`: user-facing guide for catalog, cart, checkout mock, dark mode, and static limitations.
+- `/engineering/`: technical quality, CI/CD, accessibility, coverage, E2E scope, and architecture trade-offs.
+- `/docs/`: generated TypeDoc API/reference documentation.
+- `/coverage/`: generated Vitest HTML coverage report.
+
+TypeDoc generates technical reference documentation in `docs/`:
 
 ```bash
 npm run docs

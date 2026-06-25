@@ -19,5 +19,6 @@
   "hideGenerator": true,
   "out": "docs",
   "plugin": [],
+  "readme": "typedoc-index.md",
   "tsconfig": "tsconfig.typedoc.json"
 }

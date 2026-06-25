@@ -23,6 +23,9 @@ export function SiteHeader(): ReactNode {
           <Link className="hover:text-emerald-700 dark:hover:text-emerald-300" href="/#catalogo">
             Catalogo
           </Link>
+          <Link className="hover:text-emerald-700 dark:hover:text-emerald-300" href="/guide">
+            Guide
+          </Link>
           <Link className="hover:text-emerald-700 dark:hover:text-emerald-300" href="/engineering">
             Engineering
           </Link>

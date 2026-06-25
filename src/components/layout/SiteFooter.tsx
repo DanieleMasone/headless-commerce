@@ -28,6 +28,12 @@ export function SiteFooter(): ReactNode {
         <nav aria-label="Risorse progetto" className="flex flex-wrap gap-4">
           <Link
             className="font-semibold text-stone-700 hover:text-emerald-700 dark:text-stone-200 dark:hover:text-emerald-300"
+            href="/guide"
+          >
+            Guide
+          </Link>
+          <Link
+            className="font-semibold text-stone-700 hover:text-emerald-700 dark:text-stone-200 dark:hover:text-emerald-300"
             href="/engineering"
           >
             Engineering

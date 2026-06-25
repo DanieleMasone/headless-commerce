@@ -85,6 +85,10 @@ async function expectNoHorizontalOverflow(page: Page): Promise<void> {
     .toBe(true);
 }
 
+async function expectNoInternalLabels(page: Page): Promise<void> {
+  await expect(page.locator("body")).not.toContainText(/Subtotale in centesimi|Hero price/);
+}
+
 test("shopper searches, filters, edits cart quantity, and completes mock checkout", async ({
   page,
 }) => {
@@ -92,8 +96,13 @@ test("shopper searches, filters, edits cart quantity, and completes mock checkou
   await gotoHome(page);
 
   await expect(page.getByRole("heading", { name: /Headless commerce statico/ })).toBeVisible();
+  await expectNoInternalLabels(page);
 
   const footer = page.getByRole("contentinfo");
+  await expect(footer.getByRole("link", { name: "Guide" })).toHaveAttribute(
+    "href",
+    `${basePath}/guide/`,
+  );
   await expect(footer.getByRole("link", { name: "Coverage" })).toHaveAttribute(
     "href",
     `${basePath}/coverage/`,
@@ -178,6 +187,41 @@ test("shows an empty search state and resets back to the full catalog", async ({
   await expect(page.getByLabel("Cerca prodotti")).toHaveValue("");
   await expect(page.getByText("8 prodotti trovati su 8 nel catalogo statico.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Atlas Modular Desk Kit" })).toBeVisible();
+});
+
+test("surfaces the user guide with public navigation and report links", async ({ page }) => {
+  await installInitialBrowserState(page);
+  await gotoHome(page);
+
+  await page.getByRole("contentinfo").getByRole("link", { name: "Guide" }).click();
+
+  await expect(page).toHaveURL(pathPattern(`${basePath}/guide`));
+  await expect(
+    page.getByRole("heading", { name: /Come leggere e usare la demo commerce/ }),
+  ).toBeVisible();
+  await expectNoInternalLabels(page);
+
+  const main = page.getByRole("main");
+  await expect(main.getByRole("link", { name: "Demo homepage" })).toHaveAttribute(
+    "href",
+    `${basePath}/`,
+  );
+  await expect(main.getByRole("link", { name: "Engineering" })).toHaveAttribute(
+    "href",
+    `${basePath}/engineering/`,
+  );
+  await expect(main.getByRole("link", { name: "Coverage report" })).toHaveAttribute(
+    "href",
+    `${basePath}/coverage/`,
+  );
+  await expect(main.getByRole("link", { name: "TypeDoc docs" })).toHaveAttribute(
+    "href",
+    `${basePath}/docs/`,
+  );
+  await expect(main.getByRole("link", { name: "GitHub repository" })).toHaveAttribute(
+    "href",
+    /github\.com\/danielemasone\/headless-commerce/,
+  );
 });
 
 test("surfaces engineering quality details and public report links", async ({ page }) => {

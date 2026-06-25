@@ -6,7 +6,7 @@ import { extname, join, normalize, resolve } from "node:path";
 const root = resolve("out");
 const port = Number(process.env.PORT ?? 4173);
 const closeWhenIdle = process.argv.includes("--e2e");
-const idleTimeoutMs = 30_000;
+const idleTimeoutMs = 60_000;
 const rawBasePath = process.env.NEXT_PUBLIC_BASE_PATH?.trim() ?? "";
 const basePath =
   rawBasePath.length === 0 || rawBasePath === "/"

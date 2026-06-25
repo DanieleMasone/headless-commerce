@@ -131,6 +131,7 @@ Use only scripts that exist in `package.json`:
 - Keep documentation focused on real APIs such as product model, cart types, cart reducer, cart provider/hooks, checkout mock, price formatter, routing/basePath helper, and public component props where useful.
 - Do not document trivial components just to inflate generated docs.
 - TypeDoc must generate public HTML documentation into `docs/`.
+- User-facing documentation must live in static app pages such as `/guide/` or `/engineering/`; generated TypeDoc output under `/docs/` must remain API/reference documentation.
 - `coverage/` and `docs/` must be published on GitHub Pages, not only uploaded as CI artifacts.
 - `npm run expose:reports` must ensure generated reports are included in `out/coverage/` and `out/docs/`.
 - Do not manually edit generated `docs/`, `coverage/`, or `out/` content unless the task explicitly targets generated output.
@@ -194,5 +195,5 @@ For code changes, the task is done only when:
 - public reports are exposed with `npm run expose:reports`
 - static export output is asserted with `node scripts/assert-static-export.mjs`
 - `npm run ci` passes when the change affects application code, tests, docs generation, build, or deployment
-- homepage, `/engineering/`, product detail, checkout, `/coverage/`, and `/docs/` links remain valid under `NEXT_PUBLIC_BASE_PATH=/headless-commerce`
+- homepage, `/guide/`, `/engineering/`, product detail, checkout, `/coverage/`, and `/docs/` links remain valid under `NEXT_PUBLIC_BASE_PATH=/headless-commerce`
 - no server runtime, API route, Server Action, or GitHub Pages regression has been introduced
