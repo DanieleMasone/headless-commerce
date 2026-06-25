@@ -1,7 +1,8 @@
 # Headless Commerce
 
 [![CI and GitHub Pages](https://github.com/danielemasone/headless-commerce/actions/workflows/ci-pages.yml/badge.svg?branch=master)](https://github.com/danielemasone/headless-commerce/actions/workflows/ci-pages.yml)
-![Coverage gated](https://img.shields.io/badge/coverage-gated%2080%25%2B-0f766e)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Coverage](https://img.shields.io/badge/coverage-96%25-15803d)](https://danielemasone.github.io/headless-commerce/coverage//)
 
 Static headless commerce frontend built with **Next.js App Router**, **strict TypeScript**, **Tailwind CSS**, **Vitest**, **Playwright**, **TypeDoc**, and **GitHub Pages**.
 
