@@ -40,7 +40,7 @@ Use only scripts that exist in `package.json`:
 - `npm run test:e2e`: run Playwright E2E tests against the generated `out/` static export. Run `npx playwright install chromium` once and `npm run build` first when using it outside `npm run ci`.
 - `npm run docs`: clean and generate TypeDoc HTML documentation into `docs/`.
 - `npm run docs:clean`: remove generated TypeDoc output.
-- `npm run expose:reports`: copy generated docs and coverage into `out/docs/` and `out/coverage/`.
+- `npm run expose:reports`: copy generated docs and coverage into `out/docs/` and `out/coverage/`, then generate `out/coverage-badge.json` from Vitest line coverage.
 - `npm run ci`: run format check, lint, typecheck, coverage tests, docs, build, report exposure, E2E tests, and static export assertions.
 - `npm run deploy:check`: verify coverage, docs, static build, report exposure, and export integrity.
 
@@ -134,6 +134,8 @@ Use only scripts that exist in `package.json`:
 - User-facing documentation must live in static app pages such as `/guide/` or `/engineering/`; generated TypeDoc output under `/docs/` must remain API/reference documentation.
 - `coverage/` and `docs/` must be published on GitHub Pages, not only uploaded as CI artifacts.
 - `npm run expose:reports` must ensure generated reports are included in `out/coverage/` and `out/docs/`.
+- Repository badges must represent live project state. Do not hardcode coverage, version, build, or runtime values when a reliable dynamic source exists.
+- The coverage badge endpoint must be generated from `coverage/coverage-summary.json` and included in the Pages artifact as `out/coverage-badge.json`.
 - Do not manually edit generated `docs/`, `coverage/`, or `out/` content unless the task explicitly targets generated output.
 
 ## CI/CD Rules

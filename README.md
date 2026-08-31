@@ -1,8 +1,7 @@
 # Headless Commerce
 
 [![CI and GitHub Pages](https://github.com/danielemasone/headless-commerce/actions/workflows/ci-pages.yml/badge.svg?branch=master)](https://github.com/danielemasone/headless-commerce/actions/workflows/ci-pages.yml)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Coverage](https://img.shields.io/badge/coverage-96%25-15803d)](https://danielemasone.github.io/headless-commerce/coverage/)
+[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fdanielemasone.github.io%2Fheadless-commerce%2Fcoverage-badge.json)](https://danielemasone.github.io/headless-commerce/coverage/)
 
 Static headless commerce frontend built with **Next.js App Router**, **strict TypeScript**, **Tailwind CSS**, **Vitest**, **Playwright**, **TypeDoc**, and **GitHub Pages**.
 
@@ -117,7 +116,7 @@ npm run ci
 | `npm run test:coverage`  | Run tests with coverage                   |
 | `npm run test:e2e`       | Run Playwright tests                      |
 | `npm run docs`           | Generate TypeDoc documentation            |
-| `npm run expose:reports` | Copy docs and coverage into `out/`        |
+| `npm run expose:reports` | Publish reports and the coverage badge    |
 | `npm run ci`             | Run the complete CI validation flow       |
 
 ## Quality Gates
@@ -175,6 +174,10 @@ out/coverage/
 ```
 
 Both are deployed publicly with the GitHub Pages artifact.
+
+`npm run expose:reports` also generates `out/coverage-badge.json` from the
+Vitest line coverage total. Shields.io reads that endpoint, so the README does
+not store a hardcoded coverage percentage.
 
 ## Architecture Notes
 
