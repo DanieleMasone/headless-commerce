@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next typegen && node scripts/prepare-next-types.mjs && next build && node scripts/prepare-next-types.mjs",
+    "build": "next typegen && node scripts/prepare-next-types.mjs && next build && node scripts/normalize-static-export.mjs && node scripts/prepare-next-types.mjs",
     "start": "node scripts/serve-static.mjs",
     "lint": "eslint . --max-warnings=0",
     "format": "prettier . --write",

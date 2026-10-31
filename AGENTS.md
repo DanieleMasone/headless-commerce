@@ -28,7 +28,7 @@
 Use only scripts that exist in `package.json`:
 
 - `npm run dev`: start the Next.js development server.
-- `npm run build`: generate Next types, run the static Next.js build, and refresh prepared Next type stubs.
+- `npm run build`: generate Next types, run the static Next.js build, normalize nested segment payload filenames, and refresh prepared Next type stubs.
 - `npm run start`: serve the exported static site locally from `out/`.
 - `npm run lint`: run ESLint with zero warnings allowed.
 - `npm run format`: format the repository with Prettier.
@@ -50,6 +50,7 @@ Use only scripts that exist in `package.json`:
 - Keep `images: { unoptimized: true }` because GitHub Pages cannot run the Next.js image optimization server.
 - Keep `trailingSlash: true`.
 - Keep support for `NEXT_PUBLIC_BASE_PATH=/headless-commerce` through `basePath` and `assetPrefix`.
+- `NEXT_PUBLIC_SITE_URL` supplies the public metadata origin (defaults to `https://danielemasone.github.io`); canonical and image paths must include `NEXT_PUBLIC_BASE_PATH` exactly once.
 - Do not add API routes, Server Actions, SSR runtime requirements, middleware that requires a server, or production-only Node.js dependencies.
 - Product data must remain local to the repository.
 - Checkout must remain a browser-only Stripe mock with no real keys and no server call.
@@ -58,6 +59,8 @@ Use only scripts that exist in `package.json`:
   - `/docs/`
 - Use the existing base path helper for public assets, report links, and other URLs that must work under `https://danielemasone.github.io/headless-commerce/`.
 - Product images referenced by data must exist under `public/products/`.
+- Product pages must not present another product's image as an alternate gallery view.
+- `scripts/normalize-static-export.mjs` supplies flat segment payload filenames for Next.js Windows export issue #85374. Keep this build-only workaround until upstream exports match browser requests; do not hide missing assets with preview-server rewrites or successful 404 responses.
 - Do not hardcode root-relative public URLs in a way that breaks project Pages deployment.
 
 ## Code Style

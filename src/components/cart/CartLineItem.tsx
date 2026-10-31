@@ -44,6 +44,7 @@ export function CartLineItem({
           <div aria-label={`Quantità ${product.name}`} className="flex items-center gap-2">
             <Button
               aria-label={`Riduci quantità ${product.name}`}
+              className="min-w-11"
               onClick={() => onDecrement(product.slug)}
               size="sm"
               variant="secondary"
@@ -53,6 +54,7 @@ export function CartLineItem({
             <span className="min-w-6 text-center text-sm font-semibold">{quantity}</span>
             <Button
               aria-label={`Aumenta quantità ${product.name}`}
+              className="min-w-11"
               onClick={() => onIncrement(product.slug)}
               size="sm"
               variant="secondary"

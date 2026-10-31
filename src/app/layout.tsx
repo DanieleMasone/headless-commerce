@@ -9,7 +9,7 @@ import { ThemeProvider } from "@/lib/theme/theme-store";
 
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://headless-commerce.example";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://danielemasone.github.io";
 const themeInitScript = `
 (() => {
   try {
@@ -32,7 +32,7 @@ const themeInitScript = `
 export const metadata: Metadata = {
   description:
     "Static headless commerce portfolio with conversion-oriented UX, local mock data, cart drawer, and mock Stripe checkout.",
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(new URL(siteUrl).origin),
   title: {
     default: "Headless Commerce",
     template: "%s | Headless Commerce",
@@ -57,7 +57,9 @@ export default function RootLayout({
               Salta al contenuto
             </a>
             <SiteHeader />
-            <main id="main-content">{children}</main>
+            <main id="main-content" tabIndex={-1}>
+              {children}
+            </main>
             <SiteFooter />
             <CartDrawer />
           </CartProvider>

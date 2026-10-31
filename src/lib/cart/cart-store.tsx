@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 
+import { getProductBySlug } from "@/data/products";
 import {
   cartReducer,
   getCartItemCount,
@@ -63,13 +64,29 @@ function parseStoredItems(value: string | null): CartLineItem[] {
       return [];
     }
 
-    return parsed.filter((item): item is CartLineItem => {
-      if (!isRecord(item) || !isRecord(item.product)) {
-        return false;
+    const items: CartLineItem[] = [];
+
+    for (const item of parsed) {
+      if (
+        !isRecord(item) ||
+        !isRecord(item.product) ||
+        typeof item.product.slug !== "string" ||
+        typeof item.quantity !== "number" ||
+        !Number.isSafeInteger(item.quantity) ||
+        item.quantity <= 0
+      ) {
+        continue;
       }
 
-      return typeof item.product.slug === "string" && typeof item.quantity === "number";
-    });
+      // Resolve persisted identifiers against the current catalog, never trust stored prices.
+      const product = getProductBySlug(item.product.slug);
+
+      if (product && !items.some((line) => line.product.slug === product.slug)) {
+        items.push({ product, quantity: item.quantity });
+      }
+    }
+
+    return items;
   } catch {
     return [];
   }
@@ -90,7 +107,14 @@ export function CartProvider({
       return;
     }
 
-    dispatch({ items: parseStoredItems(window.localStorage.getItem(storageKey)), type: "hydrate" });
+    try {
+      dispatch({
+        items: parseStoredItems(window.localStorage.getItem(storageKey)),
+        type: "hydrate",
+      });
+    } catch {
+      // Storage can be unavailable; the cart remains usable in memory.
+    }
   }, [initialState, persist]);
 
   useEffect(() => {
@@ -98,7 +122,11 @@ export function CartProvider({
       return;
     }
 
-    window.localStorage.setItem(storageKey, JSON.stringify(state.items));
+    try {
+      window.localStorage.setItem(storageKey, JSON.stringify(state.items));
+    } catch {
+      // Quota or privacy restrictions must not interrupt shopping.
+    }
   }, [persist, state.items]);
 
   const addItem = useCallback((product: Product, quantity?: number) => {

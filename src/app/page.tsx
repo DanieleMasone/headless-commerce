@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import type { ReactNode } from "react";
@@ -7,6 +8,16 @@ import { Badge } from "@/components/ui/Badge";
 import { productCategories, products } from "@/data/products";
 import { formatPrice } from "@/lib/format";
 import { withBasePath } from "@/lib/routing";
+
+export const metadata: Metadata = {
+  alternates: { canonical: withBasePath("/") },
+  openGraph: {
+    description: "Portfolio commerce statico con catalogo locale, carrello e checkout simulato.",
+    images: [withBasePath("/products/atlas-desk-kit.png")],
+    title: "Headless Commerce",
+    url: withBasePath("/"),
+  },
+};
 
 const qualitySignals = [
   {

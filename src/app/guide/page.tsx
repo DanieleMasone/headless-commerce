@@ -72,6 +72,7 @@ const intentionalLimits = [
 ] as const;
 
 export const metadata: Metadata = {
+  alternates: { canonical: withBasePath("/guide/") },
   description:
     "User guide for the Headless Commerce portfolio: catalog, product detail, cart drawer, mock checkout, dark mode, public reports, and static limitations.",
   title: "User Guide",

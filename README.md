@@ -67,6 +67,14 @@ For this repository deployment:
 NEXT_PUBLIC_BASE_PATH=/headless-commerce
 ```
 
+Metadata defaults to the public GitHub Pages origin. For a fork or custom domain,
+set `NEXT_PUBLIC_SITE_URL` to its public URL; only its origin is used, while
+`NEXT_PUBLIC_BASE_PATH` supplies the deployment path once.
+
+The build also copies nested Next.js segment payloads to their expected flat
+filenames when present ([upstream Windows export issue](https://github.com/vercel/next.js/issues/85374)).
+This keeps prefetching functional on static hosts without preview-server rewrites.
+
 Because the app is statically exported, it does not use:
 
 - API routes

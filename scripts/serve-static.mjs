@@ -20,6 +20,7 @@ const contentTypes = new Map([
   [".json", "application/json; charset=utf-8"],
   [".png", "image/png"],
   [".svg", "image/svg+xml"],
+  [".txt", "text/plain; charset=utf-8"],
   [".webp", "image/webp"],
 ]);
 
@@ -77,7 +78,7 @@ const server = createServer(async (request, response) => {
 
   try {
     await stat(filePath);
-    response.writeHead(200, {
+    response.writeHead(filePath === join(root, "404.html") ? 404 : 200, {
       "Content-Type": contentTypes.get(extname(filePath)) ?? "application/octet-stream",
     });
     createReadStream(filePath).pipe(response);

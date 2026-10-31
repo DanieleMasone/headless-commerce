@@ -49,7 +49,10 @@ export function ProductCard({
               {product.name}
             </Link>
           </h3>
-          <p className="line-clamp-2 text-sm leading-6 text-stone-600 dark:text-stone-300">
+          <p
+            className="line-clamp-2 text-sm leading-6 text-stone-600 dark:text-stone-300"
+            lang="en"
+          >
             {product.tagline}
           </p>
         </div>

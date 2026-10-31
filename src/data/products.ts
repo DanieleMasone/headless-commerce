@@ -15,7 +15,6 @@ export const products = [
     priceCents: 24900,
     compareAtPriceCents: 29900,
     imagePath: "/products/atlas-desk-kit.png",
-    gallery: ["/products/atlas-desk-kit.png", "/products/luma-task-lamp.png"],
     tagline: "A premium command center for focused operators.",
     description:
       "A modular desk kit with a matte organizer rail, magnetic cable routing, and a low-profile charging shelf for high-output workdays.",
@@ -30,7 +29,6 @@ export const products = [
     category: "Audio",
     priceCents: 18900,
     imagePath: "/products/pulse-headset.png",
-    gallery: ["/products/pulse-headset.png", "/products/orbit-charging-mat.png"],
     tagline: "Quiet, balanced audio for deep work and travel.",
     description:
       "Hybrid active noise cancellation, beamforming microphones, and soft-touch controls tuned for work calls and long listening sessions.",
@@ -46,7 +44,6 @@ export const products = [
     priceCents: 32900,
     compareAtPriceCents: 36900,
     imagePath: "/products/nomad-carry-on.png",
-    gallery: ["/products/nomad-carry-on.png", "/products/apex-commuter-pack.png"],
     tagline: "A carry-on built around fast-moving product teams.",
     description:
       "A lightweight shell, removable tech pod, and location-ready ID plate keep business travel organized without looking overbuilt.",
@@ -61,7 +58,6 @@ export const products = [
     category: "Workspace",
     priceCents: 11900,
     imagePath: "/products/luma-task-lamp.png",
-    gallery: ["/products/luma-task-lamp.png", "/products/atlas-desk-kit.png"],
     tagline: "Glare-managed light for late launches.",
     description:
       "A compact aluminum desk lamp with warm-to-cool dimming, memory presets, and a weighted base that stays planted.",
@@ -76,7 +72,6 @@ export const products = [
     category: "Lifestyle",
     priceCents: 6400,
     imagePath: "/products/forge-bottle.png",
-    gallery: ["/products/forge-bottle.png", "/products/drift-weekly-planner.png"],
     tagline: "Double-wall hydration with a clean desk profile.",
     description:
       "A powder-coated steel bottle with a low-noise lid, one-hand carry loop, and volume marks for long office days.",
@@ -91,7 +86,6 @@ export const products = [
     category: "Workspace",
     priceCents: 8900,
     imagePath: "/products/orbit-charging-mat.png",
-    gallery: ["/products/orbit-charging-mat.png", "/products/atlas-desk-kit.png"],
     tagline: "A soft landing zone for the devices you actually use.",
     description:
       "A vegan leather charging mat with dual wireless coils and a stitched cable channel for cleaner surfaces.",
@@ -106,7 +100,6 @@ export const products = [
     category: "Travel",
     priceCents: 15600,
     imagePath: "/products/apex-commuter-pack.png",
-    gallery: ["/products/apex-commuter-pack.png", "/products/nomad-carry-on.png"],
     tagline: "A structured pack for hybrid teams.",
     description:
       "A water-resistant commuter backpack with a suspended laptop bay, document sleeve, and fast-access side pocket.",
@@ -121,7 +114,6 @@ export const products = [
     category: "Lifestyle",
     priceCents: 4200,
     imagePath: "/products/drift-weekly-planner.png",
-    gallery: ["/products/drift-weekly-planner.png", "/products/forge-bottle.png"],
     tagline: "Analog planning for calmer delivery cycles.",
     description:
       "A lay-flat weekly planner with roadmap spreads, meeting capture pages, and recycled heavyweight paper.",

@@ -16,7 +16,6 @@ export interface Product {
   readonly priceCents: number;
   readonly compareAtPriceCents?: number;
   readonly imagePath: string;
-  readonly gallery: readonly string[];
   readonly tagline: string;
   readonly description: string;
   readonly features: readonly string[];

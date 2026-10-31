@@ -68,6 +68,7 @@ const tradeOffs = [
 ] as const;
 
 export const metadata: Metadata = {
+  alternates: { canonical: withBasePath("/engineering/") },
   description:
     "Quality dashboard for the Headless Commerce portfolio: CI/CD, coverage, TypeDoc, accessibility, static export trade-offs, and GitHub Pages constraints.",
   title: "Engineering Quality",

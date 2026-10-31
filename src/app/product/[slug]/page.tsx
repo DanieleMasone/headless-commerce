@@ -30,10 +30,13 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   }
 
   return {
+    alternates: { canonical: withBasePath(`/product/${slug}/`) },
     description: product.description,
     openGraph: {
+      description: product.description,
       images: [withBasePath(product.imagePath)],
       title: product.name,
+      url: withBasePath(`/product/${slug}/`),
     },
     title: product.name,
   };
@@ -49,33 +52,22 @@ export default async function ProductPage({ params }: ProductPageProps): Promise
 
   return (
     <section className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_0.85fr] lg:px-8">
-      <div className="grid gap-4">
+      <div>
         <Image
           alt={product.name}
           className="aspect-[4/3] w-full rounded-lg bg-stone-100 object-cover dark:bg-stone-900"
           height={900}
+          preload
           src={withBasePath(product.imagePath)}
           width={1200}
         />
-        <div className="grid grid-cols-2 gap-4">
-          {product.gallery.slice(1).map((imagePath) => (
-            <Image
-              alt=""
-              className="aspect-[4/3] w-full rounded-lg bg-stone-100 object-cover dark:bg-stone-900"
-              height={450}
-              key={imagePath}
-              src={withBasePath(imagePath)}
-              width={600}
-            />
-          ))}
-        </div>
       </div>
       <div className="lg:pt-8">
         <Badge>{product.category}</Badge>
         <h1 className="mt-4 text-4xl font-semibold text-stone-950 dark:text-white">
           {product.name}
         </h1>
-        <p className="mt-4 text-lg leading-8 text-stone-600 dark:text-stone-300">
+        <p className="mt-4 text-lg leading-8 text-stone-600 dark:text-stone-300" lang="en">
           {product.description}
         </p>
         <div className="mt-6 flex items-center gap-4">
@@ -95,7 +87,7 @@ export default async function ProductPage({ params }: ProductPageProps): Promise
           <h2 className="text-lg font-semibold text-stone-950 dark:text-white">
             Dettagli prodotto
           </h2>
-          <ul className="mt-4 grid gap-3 text-stone-600 dark:text-stone-300">
+          <ul className="mt-4 grid gap-3 text-stone-600 dark:text-stone-300" lang="en">
             {product.features.map((feature) => (
               <li className="flex gap-3" key={feature}>
                 <span aria-hidden="true" className="mt-2 h-2 w-2 rounded-full bg-emerald-700" />

@@ -56,6 +56,13 @@ export function Drawer({
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    // Removing a focused cart line must not leave keyboard focus behind the modal.
+    if (isOpen && !panelRef.current?.contains(document.activeElement)) {
+      closeButtonRef.current?.focus();
+    }
+  }, [children, footer, isOpen]);
+
   if (!isOpen) {
     return null;
   }

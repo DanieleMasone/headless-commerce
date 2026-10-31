@@ -18,11 +18,7 @@ describe("product catalog integrity", () => {
 
   it("references existing public product images", () => {
     for (const product of products) {
-      const imagePaths = [product.imagePath, ...product.gallery];
-
-      for (const imagePath of imagePaths) {
-        expect(existsSync(join(productImageRoot, imagePath.replace(/^\/+/, "")))).toBe(true);
-      }
+      expect(existsSync(join(productImageRoot, product.imagePath.replace(/^\/+/, "")))).toBe(true);
     }
   });
 

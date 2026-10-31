@@ -9,6 +9,7 @@ describe("ProductCard", () => {
     render(<ProductCard onAddToCart={vi.fn()} product={products[0]} />);
 
     expect(screen.getByRole("heading", { name: products[0].name })).toBeInTheDocument();
+    expect(screen.getByText(products[0].tagline)).toHaveAttribute("lang", "en");
     expect(screen.getByRole("link", { name: `Apri ${products[0].name}` })).toHaveAttribute(
       "href",
       `/product/${products[0].slug}`,

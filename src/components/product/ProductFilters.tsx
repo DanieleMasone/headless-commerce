@@ -102,14 +102,14 @@ export function ProductFilters({
         </span>
         <input
           aria-label="Prezzo massimo"
-          className="mt-4 h-2 w-full accent-emerald-700"
+          className="mt-3 h-11 w-full accent-emerald-700"
           id="product-max-price"
           max={maxPriceCents}
           min={0}
           onChange={(event) =>
             onChange({ ...filters, maxPriceCents: Number(event.currentTarget.value) })
           }
-          step={500}
+          step={100}
           type="range"
           value={filters.maxPriceCents}
         />

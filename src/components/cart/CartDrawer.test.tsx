@@ -6,6 +6,27 @@ import { products } from "@/data/products";
 import { CartProvider } from "@/lib/cart/cart-store";
 
 describe("CartDrawer", () => {
+  it.each(["Riduci quantità", "Rimuovi"])(
+    "retains focus inside the drawer after %s removes the last line",
+    (action) => {
+      render(
+        <CartProvider
+          initialState={{ isOpen: true, items: [{ product: products[0], quantity: 1 }] }}
+          persist={false}
+        >
+          <CartDrawer />
+        </CartProvider>,
+      );
+
+      const control = screen.getByRole("button", { name: `${action} ${products[0].name}` });
+      control.focus();
+      fireEvent.click(control);
+
+      expect(screen.getByRole("dialog", { name: "Carrello (0)" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Chiudi carrello" })).toHaveFocus();
+    },
+  );
+
   it("renders line items, subtotal, and quantity controls", () => {
     render(
       <CartProvider
@@ -65,6 +86,8 @@ describe("CartDrawer", () => {
     );
 
     expect(screen.getByText("Il carrello è vuoto")).toBeInTheDocument();
+    expect(screen.getByText(/Aggiungi un prodotto dal catalogo/)).toBeInTheDocument();
+    expect(screen.queryByText(/confrontare/)).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Continua lo shopping" }));
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();

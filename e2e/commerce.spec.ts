@@ -1,5 +1,7 @@
 import { expect, test as base, type Page } from "@playwright/test";
 
+import { products } from "../src/data/products";
+
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const cartStorageKey = "headless-commerce-cart";
 const themeStorageKey = "headless-commerce-theme";
@@ -10,6 +12,7 @@ const test = base.extend<{ criticalConsoleErrors: void }>({
     async ({ page }, use) => {
       const errors: string[] = [];
 
+      page.on("pageerror", (error) => errors.push(error.message));
       page.on("console", (message) => {
         if (message.type() === "error") {
           errors.push(message.text());
@@ -137,8 +140,18 @@ test("shopper searches, filters, edits cart quantity, and completes mock checkou
   ]);
   await expect(page.getByRole("heading", { name: "Sessione Stripe simulata" })).toBeVisible();
 
+  await page.getByRole("button", { name: "Simula errore" }).click();
+  await expect(page.getByRole("heading", { name: "Checkout demo fallito" })).toBeVisible();
+  await expect(page.getByRole("complementary")).toContainText("Quantità 2");
+  await expect(page.getByRole("complementary")).toContainText(/378,00\s\u20ac/);
+
   await page.getByRole("button", { name: /Paga in modalit. demo/ }).click();
   await expect(page.getByRole("heading", { name: "Checkout demo completato" })).toBeVisible();
+  await expect(page.getByRole("status")).toContainText(/378,00\s\u20ac/);
+  await expect(page.getByRole("button", { name: /Paga in modalit. demo/ })).toHaveCount(0);
+  await expect(page.getByRole("complementary")).toHaveCount(0);
+  await page.getByRole("link", { name: "Torna al catalogo" }).click();
+  await expect(page.getByRole("button", { name: /Apri carrello, 0 articoli/ })).toBeVisible();
 });
 
 test("persists dark mode preference and keeps toggle action labels accurate", async ({ page }) => {
@@ -168,6 +181,47 @@ test("persists dark mode preference and keeps toggle action labels accurate", as
   );
 });
 
+test("recovers persisted cart data using current products and keeps focus after removal", async ({
+  page,
+}) => {
+  await page.addInitScript(
+    ({ key, slug }) => {
+      const marker = "cart-recovery-seeded";
+
+      if (window.sessionStorage.getItem(marker)) {
+        return;
+      }
+
+      window.localStorage.setItem(
+        key,
+        JSON.stringify([
+          { product: { slug, priceCents: 1 }, quantity: 2 },
+          { product: { slug: "retired-product" }, quantity: 1 },
+          { product: null, quantity: -1 },
+        ]),
+      );
+      window.sessionStorage.setItem(marker, "true");
+    },
+    { key: cartStorageKey, slug: products[0].slug },
+  );
+  await gotoHome(page);
+
+  const trigger = page.getByRole("button", { name: /Apri carrello, 2 articoli/ });
+  await expect(trigger).toHaveAccessibleName(/498,00\s\u20ac/);
+  await trigger.click();
+  const drawer = page.getByRole("dialog", { name: "Carrello (2)" });
+  await expect(drawer).toContainText(products[0].name);
+  await expect(drawer).toContainText(/498,00\s\u20ac/);
+  await drawer.getByRole("button", { name: `Rimuovi ${products[0].name}` }).click();
+
+  await expect(page.getByRole("dialog", { name: "Carrello (0)" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Chiudi carrello" })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: /Apri carrello, 0 articoli/ })).toBeFocused();
+  await page.reload();
+  await expect(page.getByRole("button", { name: /Apri carrello, 0 articoli/ })).toBeVisible();
+});
+
 test("shows an empty search state and resets back to the full catalog", async ({ page }) => {
   await installInitialBrowserState(page);
   await gotoHome(page);
@@ -187,6 +241,9 @@ test("shows an empty search state and resets back to the full catalog", async ({
   await expect(page.getByLabel("Cerca prodotti")).toHaveValue("");
   await expect(page.getByText("8 prodotti trovati su 8 nel catalogo statico.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Atlas Modular Desk Kit" })).toBeVisible();
+  await page.getByRole("slider", { name: "Prezzo massimo" }).press("End");
+  await expect(page.getByRole("slider", { name: "Prezzo massimo" })).toHaveValue("32900");
+  await expect(page.getByText("8 prodotti trovati su 8 nel catalogo statico.")).toBeVisible();
 });
 
 test("surfaces the user guide with public navigation and report links", async ({ page }) => {
@@ -261,9 +318,18 @@ test("keeps the cart drawer accessible when closing and emptying the cart", asyn
   await expect(openDrawer).toHaveAttribute("aria-modal", "true");
   await expect(openDrawer).toContainText(/249,00\s\u20ac/);
   await expect(openDrawer).not.toContainText(/centesimi|24900/i);
+  const closeButton = openDrawer.getByRole("button", { name: "Chiudi carrello" });
+  await expect(closeButton).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(openDrawer.getByRole("button", { name: "Svuota carrello" })).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(closeButton).toBeFocused();
 
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog", { name: "Carrello (1)" })).toBeHidden();
+  await expect(
+    page.getByRole("button", { name: "Aggiungi Atlas Modular Desk Kit al carrello" }),
+  ).toBeFocused();
 
   await page.getByRole("button", { name: /Apri carrello/ }).click();
   const reopenedDrawer = page.getByRole("dialog", { name: "Carrello (1)" });
@@ -275,6 +341,10 @@ test("keeps the cart drawer accessible when closing and emptying the cart", asyn
 
   await expect(page.getByRole("dialog", { name: "Carrello (0)" })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Il carrello . vuoto/ })).toBeVisible();
+  await expect(page.getByRole("dialog")).toContainText("Aggiungi un prodotto dal catalogo");
+  await expect(page.getByRole("button", { name: "Chiudi carrello" })).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(page.getByRole("button", { name: "Continua lo shopping" })).toBeFocused();
 });
 
 test("supports the core catalog and cart flow on mobile without horizontal overflow", async ({
@@ -283,6 +353,11 @@ test("supports the core catalog and cart flow on mobile without horizontal overf
   await page.setViewportSize({ height: 844, width: 390 });
   await installInitialBrowserState(page);
   await gotoHome(page);
+
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("link", { name: "Salta al contenuto" })).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("main")).toBeFocused();
 
   await expect(page.getByRole("banner")).toBeVisible();
   await expect(page.getByRole("link", { name: "HC" })).toBeVisible();
@@ -297,4 +372,57 @@ test("supports the core catalog and cart flow on mobile without horizontal overf
   await expect(drawer).toBeVisible();
   await expect(drawer.getByRole("link", { name: "Vai al checkout" })).toBeVisible();
   await expectNoHorizontalOverflow(page);
+});
+
+test("exports canonical metadata and only the matching product image under the Pages base path", async ({
+  page,
+  request,
+}) => {
+  const origin = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://danielemasone.github.io")
+    .origin;
+
+  for (const route of ["/", "/guide/", "/engineering/", "/checkout/"]) {
+    const response = await page.goto(`${basePath}${route}`);
+    expect(response?.status()).toBe(200);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      "href",
+      `${origin}${basePath}${route}`,
+    );
+  }
+
+  for (const product of products) {
+    const route = `${basePath}/product/${product.slug}/`;
+    const response = await page.goto(route);
+    expect(response?.status()).toBe(200);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      "href",
+      `${origin}${route}`,
+    );
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
+      "content",
+      `${origin}${route}`,
+    );
+
+    for (const selector of ['meta[property="og:image"]', 'meta[name="twitter:image"]']) {
+      await expect(page.locator(selector)).toHaveAttribute(
+        "content",
+        `${origin}${basePath}${product.imagePath}`,
+      );
+    }
+
+    const images = page.getByRole("main").getByRole("img");
+    await expect(images).toHaveCount(1);
+    await expect(images).toHaveAttribute("alt", product.name);
+    await expect(images).toHaveAttribute("src", `${basePath}${product.imagePath}`);
+    await expect(page.getByText(product.description, { exact: true })).toHaveAttribute(
+      "lang",
+      "en",
+    );
+  }
+
+  expect((await request.get(`${basePath}/missing-audit-route/`)).status()).toBe(404);
+  expect((await request.get(`${basePath}/products/missing.png`)).status()).toBe(404);
+  const payload = await request.get(`${basePath}/checkout/__next.checkout.__PAGE__.txt`);
+  expect(payload.status()).toBe(200);
+  expect(payload.headers()["content-type"]).toContain("text/plain");
 });

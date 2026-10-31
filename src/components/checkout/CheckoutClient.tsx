@@ -6,6 +6,7 @@ import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/Button";
 import { Price } from "@/components/ui/Price";
 import { useCart } from "@/lib/cart/cart-store";
+import { cx } from "@/lib/format";
 import {
   createMockStripeCheckoutSession,
   type MockCheckoutSession,
@@ -18,6 +19,7 @@ export function CheckoutClient(): ReactNode {
   const { clearCart, items, subtotalCents } = useCart();
   const [checkoutState, setCheckoutState] = useState<CheckoutState>("idle");
   const [session, setSession] = useState<MockCheckoutSession | null>(null);
+  const completed = session?.status === "success";
 
   async function handleCheckout(forceResult?: MockCheckoutStatus): Promise<void> {
     setCheckoutState("loading");
@@ -54,7 +56,12 @@ export function CheckoutClient(): ReactNode {
   }
 
   return (
-    <section className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_380px] lg:px-8">
+    <section
+      className={cx(
+        "mx-auto gap-8 px-4 py-12 sm:px-6 lg:px-8",
+        completed ? "max-w-3xl" : "grid max-w-6xl lg:grid-cols-[1fr_380px]",
+      )}
+    >
       <div>
         <p className="text-sm font-semibold uppercase text-emerald-800 dark:text-emerald-300">
           Checkout mock
@@ -88,48 +95,63 @@ export function CheckoutClient(): ReactNode {
                 </dd>
               </div>
             </dl>
+            {completed ? (
+              <Link
+                className="mt-6 inline-flex min-h-11 items-center font-semibold text-emerald-800 underline dark:text-emerald-300"
+                href="/"
+              >
+                Torna al catalogo
+              </Link>
+            ) : null}
           </div>
         ) : null}
       </div>
 
-      <aside className="h-fit rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-950">
-        <h2 className="text-lg font-semibold text-stone-950 dark:text-white">Riepilogo ordine</h2>
-        <div className="mt-5 space-y-4">
-          {items.map((item) => (
-            <div className="flex items-start justify-between gap-4 text-sm" key={item.product.slug}>
-              <div>
-                <p className="font-semibold text-stone-950 dark:text-white">{item.product.name}</p>
-                <p className="text-stone-500 dark:text-stone-400">Quantità {item.quantity}</p>
+      {!completed ? (
+        <aside className="h-fit rounded-lg border border-stone-200 bg-white p-5 dark:border-stone-800 dark:bg-stone-950">
+          <h2 className="text-lg font-semibold text-stone-950 dark:text-white">Riepilogo ordine</h2>
+          <div className="mt-5 space-y-4">
+            {items.map((item) => (
+              <div
+                className="flex items-start justify-between gap-4 text-sm"
+                key={item.product.slug}
+              >
+                <div>
+                  <p className="font-semibold text-stone-950 dark:text-white">
+                    {item.product.name}
+                  </p>
+                  <p className="text-stone-500 dark:text-stone-400">Quantità {item.quantity}</p>
+                </div>
+                <Price
+                  amountCents={item.product.priceCents * item.quantity}
+                  className="font-semibold"
+                />
               </div>
-              <Price
-                amountCents={item.product.priceCents * item.quantity}
-                className="font-semibold"
-              />
-            </div>
-          ))}
-        </div>
-        <div className="mt-6 flex items-center justify-between border-t border-stone-200 pt-5 text-base font-semibold dark:border-stone-800">
-          <span>Totale</span>
-          <Price amountCents={subtotalCents} />
-        </div>
-        <div className="mt-6 space-y-3">
-          <Button
-            className="w-full"
-            disabled={checkoutState === "loading"}
-            onClick={() => void handleCheckout("success")}
-          >
-            {checkoutState === "loading" ? "Creazione sessione..." : "Paga in modalità demo"}
-          </Button>
-          <Button
-            className="w-full"
-            disabled={checkoutState === "loading"}
-            onClick={() => void handleCheckout("failure")}
-            variant="secondary"
-          >
-            Simula errore
-          </Button>
-        </div>
-      </aside>
+            ))}
+          </div>
+          <div className="mt-6 flex items-center justify-between border-t border-stone-200 pt-5 text-base font-semibold dark:border-stone-800">
+            <span>Totale</span>
+            <Price amountCents={subtotalCents} />
+          </div>
+          <div className="mt-6 space-y-3">
+            <Button
+              className="w-full"
+              disabled={checkoutState === "loading"}
+              onClick={() => void handleCheckout("success")}
+            >
+              {checkoutState === "loading" ? "Creazione sessione..." : "Paga in modalità demo"}
+            </Button>
+            <Button
+              className="w-full"
+              disabled={checkoutState === "loading"}
+              onClick={() => void handleCheckout("failure")}
+              variant="secondary"
+            >
+              Simula errore
+            </Button>
+          </div>
+        </aside>
+      ) : null}
     </section>
   );
 }

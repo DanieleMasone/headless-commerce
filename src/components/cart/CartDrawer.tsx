@@ -88,7 +88,7 @@ export function CartDrawer({ title = "Carrello" }: CartDrawerProps): ReactNode {
             Il carrello è vuoto
           </h3>
           <p className="mt-2 max-w-xs text-sm text-stone-500 dark:text-stone-400">
-            Salva qui gli articoli che vuoi confrontare e completa il checkout nella demo Stripe.
+            Aggiungi un prodotto dal catalogo per provare il checkout demo. Nessun pagamento reale.
           </p>
           <Button className="mt-5" onClick={closeCart} variant="secondary">
             Continua lo shopping
