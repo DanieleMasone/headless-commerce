@@ -11,6 +11,7 @@
 !.yarn/versions
 
 # testing and generated reports
+/.vitest/
 /coverage/
 /docs/
 /playwright-report/

@@ -18,7 +18,7 @@
 
 ## Runtime and Package Manager
 
-- Required Node.js version: `24.15.0` from `.node-version` and `package.json` engines.
+- Required Node.js version: `24.22.1` from `.node-version`, `.nvmrc`, and `package.json` engines.
 - Package manager: npm.
 - Install dependencies with `npm ci`.
 - CI must use `npm ci`, not `npm install`, so `package.json` and `package-lock.json` must stay in sync.
@@ -155,6 +155,10 @@ Use only scripts that exist in `package.json`:
 
 ## Dependency Policy
 
+- Dependency and GitHub Actions upgrades are intentionally manual. Do not add Dependabot, Renovate, scheduled update workflows, or automated dependency-management tooling.
+- Keep TypeScript on the supported 6.0.x line until TypeDoc and typescript-eslint declare compatibility with TypeScript 7.
+- ESLint 10 is blocked by the stable React, import, and JSX accessibility plugins in `eslint-config-next`. Keep the last compatible 9.x release until their peer ranges support 10; do not force peers or disable rules to migrate.
+- Security follow-up (2026-10-31): `GHSA-g3hv-75wg-m249` affects the minimatch versions required by the lint and TypeDoc dependency trees. The patched 11.x line removes APIs used by these consumers. Recheck upstream compatibility during manual maintenance; do not force a cross-major override or suppress the audit finding.
 - Do not add dependencies without a clear technical reason.
 - Prefer native React, Next.js, TypeScript, browser, and existing project utilities.
 - Add a dependency only when it reduces real complexity, improves measurable quality, or provides a well-tested capability that would be risky to maintain locally.

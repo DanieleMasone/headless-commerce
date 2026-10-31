@@ -25,7 +25,7 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "scripts/**/*.mjs",
-    "vitest.config.ts",
+    "vitest.config.mts",
     "playwright.config.ts",
     ".next/types/**/*.ts"
   ],
